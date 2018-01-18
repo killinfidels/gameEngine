@@ -18,25 +18,31 @@ _player::~_player()
 	//_oTexture = NULL;
 }
 
-void _player::moveUp()
+void _player::move(directions _direction)
 {
-	velocity_y = velocity_y - speed;
+	direction = _direction;
+
+	switch (direction)
+	{
+	case _player::UP:
+		velocity_y = velocity_y - speed;
+		break;
+	case _player::DOWN:
+		velocity_y = velocity_y + speed;
+		break;
+	case _player::LEFT:
+		velocity_x = velocity_x - speed;
+		break;
+	case _player::RIGHT:
+		velocity_x = velocity_x + speed;
+		break;
+
+	default:
+		break;
+	}
 }
 
-void _player::moveDown()
-{
-	velocity_y = velocity_y + speed;
-}
 
-void _player::moveLeft()
-{
-	velocity_x = velocity_x - speed;
-}
-
-void _player::moveRight()
-{
-	velocity_x = velocity_x + speed;
-}
 
 void _player::slowDown(char s)
 {
@@ -143,7 +149,7 @@ void _player::update()
 
 void _player::collision(SDL_Rect _oRect)
 {
-	if (pRect.y <= (_oRect.y + _oRect.h) && !(pRect.y <= _oRect.y) && !((pRect.x + pRect.w) < _oRect.x || pRect.x > (_oRect.x + _oRect.w)))
+	if (pRect.y <= (_oRect.y + _oRect.h) && pRect.y >= _oRect.y && ((pRect.x + pRect.w) > _oRect.x && pRect.x < (_oRect.x + _oRect.w)))
 	{
 		pRect.y = (_oRect.y + _oRect.h);
 		velocity_y = 0;
@@ -152,5 +158,11 @@ void _player::collision(SDL_Rect _oRect)
 	{
 		pRect.y = (_oRect.y - pRect.h);
 		velocity_y = 0;
+	}
+
+	if ((pRect.x + pRect.w) >= _oRect.x && !(pRect.x >= _oRect.x) && !((pRect.y + pRect.h) <= _oRect.y || pRect.y >= (_oRect.y + _oRect.h)))
+	{
+		pRect.x = (_oRect.x - pRect.w);
+		velocity_x = 0;
 	}
 }
