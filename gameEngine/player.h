@@ -9,16 +9,22 @@ public:
 
 	SDL_Rect pRect;
 
-	void moveUp();
-	void moveDown();
-	void moveLeft();
-	void moveRight();
 	void slowDown(char s);
 	void collision(SDL_Rect cObject);
 
 	void update();
 
+	enum directions
+	{
+		LEFT, RIGHT, UP, DOWN
+	};
+
+public:
+	void move(directions);
+
 private:
+	directions direction;
+
 	int speed = 4;
 	int maxSpeed = 20;
 	int _x = 0, _y = 0;

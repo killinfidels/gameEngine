@@ -96,37 +96,29 @@ int main(int argc, char* args[])
 						switch (e.key.keysym.sym)
 						{
 						case SDLK_UP:
-							player1.moveUp();
+							player1.move(player1.UP);
 							break;
-
 						case SDLK_DOWN:
-							player1.moveDown();
+							player1.move(player1.DOWN);
 							break;
-
 						case SDLK_LEFT:
-							player1.moveLeft();
+							player1.move(player1.LEFT);
 							break;
-
 						case SDLK_RIGHT:
-							player1.moveRight();
+							player1.move(player1.RIGHT);
 							break;
-
 						case SDLK_w:
-							player1.moveUp();
+							player1.move(player1.UP);
 							break;
-
 						case SDLK_s:
-							player1.moveDown();
+							player1.move(player1.DOWN);
 							break;
-
 						case SDLK_a:
-							player1.moveLeft();
+							player1.move(player1.LEFT);
 							break;
-
 						case SDLK_d:
-							player1.moveRight();
+							player1.move(player1.RIGHT);
 							break;
-
 						default:
 							break;
 						}
