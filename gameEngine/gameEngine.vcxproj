@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\vs_dev_lib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\vs_dev_lib\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\libraries\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\..\vs_dev_lib\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\vs_dev_lib\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\libraries\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

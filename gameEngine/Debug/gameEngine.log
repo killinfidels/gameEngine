@@ -1,2 +1,7 @@
-﻿  player.cpp
+﻿  texture.cpp
+  player.cpp
+  object.cpp
+  Source.cpp
+c:\users\toilet boy\onedrive\vs_projects\gameengine projects\gameengine\source.cpp(47): warning C4551: function call missing argument list
+  Generating Code...
   gameEngine.vcxproj -> C:\Users\toilet boy\OneDrive\vs_projects\gameEngine projects\Debug\gameEngine.exe
