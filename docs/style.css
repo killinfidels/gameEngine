@@ -1,0 +1,81 @@
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a {
+    color: black;
+}
+
+body {
+    font-size: 12px;
+    font-family: Verdana;
+    background-color: darkgray;
+    margin: 0px;
+}
+
+.evenbiggercontainer {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.invisleft {
+    height: 100%;
+    width: 14%;
+    float: left;
+    background-color: red;
+    margin-right: 1%;
+}
+
+.header {
+    height: 100px;
+    width: 84.5%;
+    margin-bottom: 0.5%;
+    background-color: palevioletred;
+    float: left;
+}
+
+.left {
+    height: 100%;
+    width: 14%;
+    background-color: cyan;
+    float: left;
+    position: fixed;
+    /*
+    padding-top: 0.2%;
+    padding-left: 0.5%;
+    */
+}
+
+.lefthome {
+    width: 100%;
+    height: 100px;
+    background-color: red;
+}
+
+.middle {
+    height: 800px;
+    width: 66.5%;
+    color: black;
+    background-color: darkcyan;
+    float: left;
+    margin-right: 1%;
+}
+
+.right {
+    height: 800px;
+    width: 16.5%;
+    text-align: end;
+    background-color: cyan;
+    float: left;
+    padding-top: 0.2%;
+    padding-left: 0.5%;
+}
