@@ -1,11 +1,13 @@
 #pragma once
 #include "Header.h"
 
-class _object
+class object
 {
 public:
-	_object(int h, int w, bool movable);
-	~_object();
+	object(int h, int w, bool movable);
+	~object();
+
+	object(object&&) = default;
 
 	void render(SDL_Renderer* renderer, int x, int y);
 
@@ -16,7 +18,7 @@ private:
 
 	bool ERRORED = false;
 
-	SDL_Texture* _oTexture;
+	SDL_Texture* _texture;
 
 	int speed;
 	int maxSpeed;
@@ -29,6 +31,5 @@ private:
 	void centerY(int y);
 	*/
 
-	int _h, _w, _x, _y;
-	bool _oMovable;
+	bool _moveable;
 };

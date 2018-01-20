@@ -6,7 +6,7 @@
 #include "player.h"
 #include "object.h"
 #include "texture.h"
-
+#include "menuItem.h"
 
 
 const int screen_width = 1024;

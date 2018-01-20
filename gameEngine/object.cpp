@@ -1,23 +1,18 @@
 #include "object.h"
 
-_object::_object(int h, int w, bool movable)
+object::object(int h, int w, bool moveable)
 {
-	_oTexture = NULL;
+	_texture = NULL;
 
-	_oMovable = movable;
-
-	_h = h;
-	_w = w;
-	_x = 0;
-	_y = 0;
+	_moveable = moveable;
 	
-	oRect.h = _h;
-	oRect.w = _w;
-	oRect.x = _x;
-	oRect.y = _y;
+	oRect.h = h;
+	oRect.w = w;
+	oRect.x = 0;
+	oRect.y = 0;
 }
 
-void _object::render(SDL_Renderer* renderer, int x, int y)
+void object::render(SDL_Renderer* renderer, int x, int y)
 {
 	/* OLD STUFF
 	if (x == NULL || y == NULL)
@@ -44,16 +39,16 @@ void _object::render(SDL_Renderer* renderer, int x, int y)
 	oRect.x = x;
 	oRect.y = y;
 
-	SDL_RenderCopy(renderer, _oTexture, NULL, &oRect);
+	SDL_RenderCopy(renderer, _texture, NULL, &oRect);
 }
 
-bool _object::setTexture(SDL_Texture* oTexture)
+bool object::setTexture(SDL_Texture* texture)
 {
 	bool success = true;
 
-	_oTexture = oTexture;
+	_texture = texture;
 
-	if (_oTexture == NULL)
+	if (_texture == NULL)
 	{
 		printf("couldnt set object texture");
 		success = false;
@@ -63,19 +58,19 @@ bool _object::setTexture(SDL_Texture* oTexture)
 }
 
 /*
-void _object::centerX(int x)
+void object::centerX(int x)
 {
 	_x = x - (_w / 2);
 }
 
-void _object::centerY(int y)
+void object::centerY(int y)
 {
 	_y = y - (_h / 2);
 }
 */
 
-_object::~_object()
+object::~object()
 {
-	SDL_DestroyTexture(_oTexture);
-	_oTexture = NULL;
+	SDL_DestroyTexture(_texture);
+	_texture = NULL;
 }

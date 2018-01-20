@@ -1,39 +1,36 @@
 #include "player.h"
 
-_player::_player(int x, int y, int w, int h)
+player::player(int x, int y, int w, int h)
 {
 	//center player
-	_x = x - (w / 2);
-	_y = y - (h / 2);
-
-	pRect.x = _x;
-	pRect.y = _y;
-	pRect.w = w;
-	pRect.h = h;
+	rect.x = x - (w / 2);
+	rect.y = y - (h / 2);
+	rect.w = w;
+	rect.h = h;
 }
 
-_player::~_player()
+player::~player()
 {
 	//SDL_DestroyTexture(_oTexture);
 	//_oTexture = NULL;
 }
 
-void _player::move(directions _direction)
+void player::move(directions _direction)
 {
 	direction = _direction;
 
 	switch (direction)
 	{
-	case _player::UP:
+	case player::UP:
 		velocity_y = velocity_y - speed;
 		break;
-	case _player::DOWN:
+	case player::DOWN:
 		velocity_y = velocity_y + speed;
 		break;
-	case _player::LEFT:
+	case player::LEFT:
 		velocity_x = velocity_x - speed;
 		break;
-	case _player::RIGHT:
+	case player::RIGHT:
 		velocity_x = velocity_x + speed;
 		break;
 
@@ -42,7 +39,7 @@ void _player::move(directions _direction)
 	}
 }
 
-void _player::slowDown(char s)
+void player::slowDown(char s)
 {
 	switch (s)
 	{
@@ -92,39 +89,39 @@ void _player::slowDown(char s)
 	}
 }
 
-void _player::update()
+void player::update()
 {
-	pRect.x = pRect.x + velocity_x;
+	rect.x = rect.x + velocity_x;
 	
-	pRect.y = pRect.y + velocity_y;
+	rect.y = rect.y + velocity_y;
 
 	slowDown('b');
 }
 
-void _player::collision(SDL_Rect oRect, bool inside)
+void player::collision(SDL_Rect oRect, bool inside)
 {
 	//keeps the player inside the desired object
 	if (inside)
 	{
 		//left side collision
-		if (pRect.x < oRect.x)
+		if (rect.x < oRect.x)
 		{
 			stopX(oRect.x);
 		}
 		//right side collision
-		if ((pRect.x + pRect.w) > (oRect.x + oRect.w))
+		if ((rect.x + rect.w) > (oRect.x + oRect.w))
 		{
-			stopX(oRect.x + oRect.w - pRect.w);
+			stopX(oRect.x + oRect.w - rect.w);
 		}
 		//top side collision
-		if (pRect.y < oRect.y)
+		if (rect.y < oRect.y)
 		{
 			stopY(oRect.y);
 		}
 		//bottom side collision
-		if ((pRect.y + pRect.h) > (oRect.y + oRect.h))
+		if ((rect.y + rect.h) > (oRect.y + oRect.h))
 		{
-			stopY(oRect.y + oRect.h - pRect.h);
+			stopY(oRect.y + oRect.h - rect.h);
 		}
 	}
 	else //keeps the player from going inside the desired object
@@ -133,15 +130,15 @@ void _player::collision(SDL_Rect oRect, bool inside)
 		if (direction == LEFT || direction == RIGHT)
 		{
 			//if the player is in the correct y position to make a collision
-			if ((pRect.y + pRect.h) > oRect.y && pRect.y < (oRect.y + oRect.h))
+			if ((rect.y + rect.h) > oRect.y && rect.y < (oRect.y + oRect.h))
 			{
 				//left side of the object
-				if (direction == RIGHT && ((pRect.x + pRect.w) > oRect.x && (pRect.x + pRect.w) < (oRect.x + oRect.w)))
+				if (direction == RIGHT && ((rect.x + rect.w) > oRect.x && (rect.x + rect.w) < (oRect.x + oRect.w)))
 				{
-					stopX(oRect.x - pRect.w);
+					stopX(oRect.x - rect.w);
 				}
 				//right side of the object
-				if (direction == LEFT && (pRect.x < (oRect.x + oRect.w) && pRect.x > oRect.x))
+				if (direction == LEFT && (rect.x < (oRect.x + oRect.w) && rect.x > oRect.x))
 				{
 					stopX(oRect.x + oRect.w);
 				}
@@ -151,15 +148,15 @@ void _player::collision(SDL_Rect oRect, bool inside)
 		else if (direction == DOWN || direction == UP)
 		{
 			//if the player is in the correct x position to make a collision
-			if ((pRect.x + pRect.w) > oRect.x && pRect.x < (oRect.x + oRect.w))
+			if ((rect.x + rect.w) > oRect.x && rect.x < (oRect.x + oRect.w))
 			{
 				//top side of the object
-				if (direction == DOWN && ((pRect.y + pRect.h) > oRect.y && (pRect.y + pRect.h) < (oRect.y + oRect.h)))
+				if (direction == DOWN && ((rect.y + rect.h) > oRect.y && (rect.y + rect.h) < (oRect.y + oRect.h)))
 				{
-					stopY(oRect.y - pRect.h);
+					stopY(oRect.y - rect.h);
 				}
 				//bottom side of the object
-				if (direction == UP && (pRect.y < (oRect.y + oRect.h) && pRect.y > oRect.y))
+				if (direction == UP && (rect.y < (oRect.y + oRect.h) && rect.y > oRect.y))
 				{
 					stopY(oRect.y + oRect.h);
 				}
@@ -168,16 +165,16 @@ void _player::collision(SDL_Rect oRect, bool inside)
 	}
 }
 
-//puts pRect.x in received x cordinate and sets velocity_x to 0
-void _player::stopX(int x)
+//puts rect.x in received x cordinate and sets velocity_x to 0
+void player::stopX(int x)
 {
-	pRect.x = x;
+	rect.x = x;
 	velocity_x = 0;
 }
 
-//puts pRect.y in received y cordinate and sets velocity_y to 0
-void _player::stopY(int y)
+//puts rect.y in received y cordinate and sets velocity_y to 0
+void player::stopY(int y)
 {
-	pRect.y = y;
+	rect.y = y;
 	velocity_y = 0;
 }

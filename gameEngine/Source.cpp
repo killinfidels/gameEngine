@@ -62,11 +62,11 @@ int main(int argc, char* args[])
 {
 	bool quit = false;
 
-	_player player1(screen_width / 2, screen_height / 2, 200, 150);
+	player player1(screen_width / 2, screen_height / 2, 200, 150);
 
-	_object object1(150, 200, false);
+	object object1(150, 200, false);
 
-	_object screen(screen_height, screen_width, false);
+	object screen(screen_height, screen_width, false);
 
 	if (!init())
 	{
@@ -74,7 +74,7 @@ int main(int argc, char* args[])
 	}
 	else
 	{
-		_texture vatar(renderer, "img/sabrine.BMP");
+		myTexture vatar(renderer, "img/sabrine.BMP");
 		SDL_Event e;
 
 		object1.setTexture(vatar.texture);
@@ -136,7 +136,7 @@ int main(int argc, char* args[])
 
 				SDL_RenderClear(renderer);
 
-				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.pRect);
+				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.rect);
 
 				object1.render(renderer, (screen_width / 2) - (object1.oRect.w/2), (screen_height / 2) - (object1.oRect.h / 2));
 
@@ -145,12 +145,12 @@ int main(int argc, char* args[])
 				SDL_Delay(16);
 			}
 		}
-		vatar.~_texture();
+		vatar.~myTexture();
 	}
 
-	object1.~_object();
-	screen.~_object();
-	player1.~_player();
+	object1.~object();
+	screen.~object();
+	player1.~player();
 
 	exit();
 

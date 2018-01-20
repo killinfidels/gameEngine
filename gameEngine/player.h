@@ -1,13 +1,13 @@
 #pragma once
 #include "Header.h"
 
-class _player
+class player
 {
 public:
-	_player(int x, int y, int w, int h);
-	~_player();
+	player(int x, int y, int w, int h);
+	~player();
 
-	SDL_Rect pRect;
+	SDL_Rect rect;
 
 	void slowDown(char s);
 	void collision(SDL_Rect cObject, bool inside);
@@ -30,6 +30,5 @@ private:
 
 	int speed = 4;
 	int maxSpeed = 20;
-	int _x = 0, _y = 0;
 	int velocity_x = 0, velocity_y = 0;
 };
