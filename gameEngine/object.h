@@ -13,7 +13,7 @@ public:
 
 	bool setTexture(SDL_Texture* oTexture);
 
-	SDL_Rect oRect;
+	SDL_Rect rect;
 private:
 
 	bool ERRORED = false;

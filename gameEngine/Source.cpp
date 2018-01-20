@@ -131,14 +131,14 @@ int main(int argc, char* args[])
 
 				player1.update();
 
-				player1.collision(object1.oRect, false);
-				player1.collision(screen.oRect, true);
+				player1.collision(object1.rect, false);
+				player1.collision(screen.rect, true);
 
 				SDL_RenderClear(renderer);
 
 				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.rect);
 
-				object1.render(renderer, (screen_width / 2) - (object1.oRect.w/2), (screen_height / 2) - (object1.oRect.h / 2));
+				object1.render(renderer, (screen_width / 2) - (object1.rect.w/2), (screen_height / 2) - (object1.rect.h / 2));
 
 				SDL_RenderPresent(renderer);
 

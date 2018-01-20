@@ -1,6 +1,6 @@
 #include "texture.h"
 
-_texture::_texture(SDL_Renderer* renderer, std::string path)
+myTexture::myTexture(SDL_Renderer* renderer, std::string path)
 {
 	std::string _path = path;
 
@@ -15,7 +15,7 @@ _texture::_texture(SDL_Renderer* renderer, std::string path)
 	}
 }
 
-_texture::~_texture()
+myTexture::~myTexture()
 {
 	surface = NULL;
 

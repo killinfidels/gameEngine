@@ -6,10 +6,10 @@ object::object(int h, int w, bool moveable)
 
 	_moveable = moveable;
 	
-	oRect.h = h;
-	oRect.w = w;
-	oRect.x = 0;
-	oRect.y = 0;
+	rect.h = h;
+	rect.w = w;
+	rect.x = 0;
+	rect.y = 0;
 }
 
 void object::render(SDL_Renderer* renderer, int x, int y)
@@ -36,10 +36,10 @@ void object::render(SDL_Renderer* renderer, int x, int y)
 	}
 	*/
 
-	oRect.x = x;
-	oRect.y = y;
+	rect.x = x;
+	rect.y = y;
 
-	SDL_RenderCopy(renderer, _texture, NULL, &oRect);
+	SDL_RenderCopy(renderer, _texture, NULL, &rect);
 }
 
 bool object::setTexture(SDL_Texture* texture)
