@@ -8,8 +8,8 @@ _object::_object(int h, int w, bool movable)
 
 	_h = h;
 	_w = w;
-	_x = NULL;
-	_y = NULL;
+	_x = 0;
+	_y = 0;
 	
 	oRect.h = _h;
 	oRect.w = _w;
@@ -19,6 +19,7 @@ _object::_object(int h, int w, bool movable)
 
 void _object::render(SDL_Renderer* renderer, int x, int y)
 {
+	/* OLD STUFF
 	if (x == NULL || y == NULL)
 	{
 		if (!ERRORED)
@@ -38,6 +39,10 @@ void _object::render(SDL_Renderer* renderer, int x, int y)
 		oRect.x = _x;
 		oRect.y = _y;
 	}
+	*/
+
+	oRect.x = x;
+	oRect.y = y;
 
 	SDL_RenderCopy(renderer, _oTexture, NULL, &oRect);
 }
@@ -57,6 +62,7 @@ bool _object::setTexture(SDL_Texture* oTexture)
 	return success;
 }
 
+/*
 void _object::centerX(int x)
 {
 	_x = x - (_w / 2);
@@ -66,6 +72,7 @@ void _object::centerY(int y)
 {
 	_y = y - (_h / 2);
 }
+*/
 
 _object::~_object()
 {

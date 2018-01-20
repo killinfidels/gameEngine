@@ -5,6 +5,8 @@ const char* windowName = "A window";
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
+
+
 bool loadMedia();
 
 void exit();
@@ -63,6 +65,8 @@ int main(int argc, char* args[])
 	_player player1(screen_width / 2, screen_height / 2, 200, 150);
 
 	_object object1(150, 200, false);
+
+	_object screen(screen_height, screen_width, false);
 
 	if (!init())
 	{
@@ -127,13 +131,14 @@ int main(int argc, char* args[])
 
 				player1.update();
 
-				player1.collision(object1.oRect);
+				player1.collision(object1.oRect, false);
+				player1.collision(screen.oRect, true);
 
 				SDL_RenderClear(renderer);
 
 				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.pRect);
 
-				object1.render(renderer, screen_width / 2, screen_height / 2);
+				object1.render(renderer, (screen_width / 2) - (object1.oRect.w/2), (screen_height / 2) - (object1.oRect.h / 2));
 
 				SDL_RenderPresent(renderer);
 
@@ -144,6 +149,7 @@ int main(int argc, char* args[])
 	}
 
 	object1.~_object();
+	screen.~_object();
 	player1.~_player();
 
 	exit();

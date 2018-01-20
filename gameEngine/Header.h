@@ -7,5 +7,7 @@
 #include "object.h"
 #include "texture.h"
 
+
+
 const int screen_width = 1024;
 const int screen_height = 720;

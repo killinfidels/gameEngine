@@ -42,8 +42,6 @@ void _player::move(directions _direction)
 	}
 }
 
-
-
 void _player::slowDown(char s)
 {
 	switch (s)
@@ -96,73 +94,90 @@ void _player::slowDown(char s)
 
 void _player::update()
 {
-	if (pRect.x > 0 && (pRect.x + pRect.w) < screen_width)
-	{
-		pRect.x = pRect.x + velocity_x;
-	}
-	else if (pRect.x <= 0 && velocity_x > 0)
-	{
-		pRect.x = pRect.x + velocity_x;
-	}
-	else if ((pRect.x + pRect.w) >= screen_width && velocity_x < 0)
-	{
-		pRect.x = pRect.x + velocity_x;
-	}
+	pRect.x = pRect.x + velocity_x;
+	
+	pRect.y = pRect.y + velocity_y;
 
-	if (pRect.y > 0 && (pRect.y + pRect.h) < screen_height)
-	{
-		pRect.y = pRect.y + velocity_y;
-	}
-	else if (pRect.y <= 0 && velocity_y > 0)
-	{
-		pRect.y = pRect.y + velocity_y;
-	}
-	else if ((pRect.y + pRect.h) >= screen_height && velocity_y < 0)
-	{
-		pRect.y = pRect.y + velocity_y;
-	}
-
-	if (pRect.x <= 0 && velocity_x < 0)
-	{
-		pRect.x = 0;
-		velocity_x = 0;
-	}
-	else if ((pRect.x + pRect.w) >= screen_width && velocity_x > 0)
-	{
-		pRect.x = screen_width - pRect.w;
-		velocity_x = 0;
-	}
-
-	if (pRect.y <= 0 && velocity_y < 0)
-	{
-		pRect.y = 0;
-		velocity_y = 0;
-	}
-	else if ((pRect.y + pRect.h) >= screen_height && velocity_y > 0)
-	{
-		pRect.y = screen_height - pRect.h;
-		velocity_y = 0;
-	}
-
-	_player::slowDown('b');
+	slowDown('b');
 }
 
-void _player::collision(SDL_Rect _oRect)
+void _player::collision(SDL_Rect oRect, bool inside)
 {
-	if (pRect.y <= (_oRect.y + _oRect.h) && pRect.y >= _oRect.y && ((pRect.x + pRect.w) > _oRect.x && pRect.x < (_oRect.x + _oRect.w)))
+	//keeps the player inside the desired object
+	if (inside)
 	{
-		pRect.y = (_oRect.y + _oRect.h);
-		velocity_y = 0;
+		//left side collision
+		if (pRect.x < oRect.x)
+		{
+			stopX(oRect.x);
+		}
+		//right side collision
+		if ((pRect.x + pRect.w) > (oRect.x + oRect.w))
+		{
+			stopX(oRect.x + oRect.w - pRect.w);
+		}
+		//top side collision
+		if (pRect.y < oRect.y)
+		{
+			stopY(oRect.y);
+		}
+		//bottom side collision
+		if ((pRect.y + pRect.h) > (oRect.y + oRect.h))
+		{
+			stopY(oRect.y + oRect.h - pRect.h);
+		}
 	}
-	else if ((pRect.y + pRect.h) >= _oRect.y && !(pRect.y >= _oRect.y) && !((pRect.x + pRect.w) < _oRect.x || pRect.x > (_oRect.x + _oRect.w)))
+	else //keeps the player from going inside the desired object
 	{
-		pRect.y = (_oRect.y - pRect.h);
-		velocity_y = 0;
+		//x cordinate collisions
+		if (direction == LEFT || direction == RIGHT)
+		{
+			//if the player is in the correct y position to make a collision
+			if ((pRect.y + pRect.h) > oRect.y && pRect.y < (oRect.y + oRect.h))
+			{
+				//left side of the object
+				if (direction == RIGHT && ((pRect.x + pRect.w) > oRect.x && (pRect.x + pRect.w) < (oRect.x + oRect.w)))
+				{
+					stopX(oRect.x - pRect.w);
+				}
+				//right side of the object
+				if (direction == LEFT && (pRect.x < (oRect.x + oRect.w) && pRect.x > oRect.x))
+				{
+					stopX(oRect.x + oRect.w);
+				}
+			}
+		}
+		//y cordinate collisions
+		else if (direction == DOWN || direction == UP)
+		{
+			//if the player is in the correct x position to make a collision
+			if ((pRect.x + pRect.w) > oRect.x && pRect.x < (oRect.x + oRect.w))
+			{
+				//top side of the object
+				if (direction == DOWN && ((pRect.y + pRect.h) > oRect.y && (pRect.y + pRect.h) < (oRect.y + oRect.h)))
+				{
+					stopY(oRect.y - pRect.h);
+				}
+				//bottom side of the object
+				if (direction == UP && (pRect.y < (oRect.y + oRect.h) && pRect.y > oRect.y))
+				{
+					stopY(oRect.y + oRect.h);
+				}
+			}
+		}
 	}
+}
 
-	if ((pRect.x + pRect.w) >= _oRect.x && !(pRect.x >= _oRect.x) && !((pRect.y + pRect.h) <= _oRect.y || pRect.y >= (_oRect.y + _oRect.h)))
-	{
-		pRect.x = (_oRect.x - pRect.w);
-		velocity_x = 0;
-	}
+//puts pRect.x in received x cordinate and sets velocity_x to 0
+void _player::stopX(int x)
+{
+	pRect.x = x;
+	velocity_x = 0;
+}
+
+//puts pRect.y in received y cordinate and sets velocity_y to 0
+void _player::stopY(int y)
+{
+	pRect.y = y;
+	velocity_y = 0;
 }

@@ -10,7 +10,7 @@ public:
 	SDL_Rect pRect;
 
 	void slowDown(char s);
-	void collision(SDL_Rect cObject);
+	void collision(SDL_Rect cObject, bool inside);
 
 	void update();
 
@@ -19,10 +19,13 @@ public:
 		LEFT, RIGHT, UP, DOWN
 	};
 
-public:
 	void move(directions);
 
 private:
+	void stopX(int x);
+	void stopY(int y);
+	
+	//keeps track of the last direction the player was traveling
 	directions direction;
 
 	int speed = 4;

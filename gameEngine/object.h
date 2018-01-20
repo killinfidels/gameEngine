@@ -24,8 +24,10 @@ private:
 	int velocity_x;
 	int velocity_y;
 
+	/*
 	void centerX(int x);
 	void centerY(int y);
+	*/
 
 	int _h, _w, _x, _y;
 	bool _oMovable;
