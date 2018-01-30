@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# CODEBLOCK FILES
+*.depend  
+*.layout
+*.cbp
+
 # User-specific files
 *.suo
 *.user
