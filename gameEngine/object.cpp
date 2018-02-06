@@ -1,6 +1,6 @@
 #include "object.h"
 
-object::object(int h, int w, bool moveable)
+Object::Object(int h, int w, bool moveable)
 {
 	_texture = NULL;
 
@@ -12,7 +12,7 @@ object::object(int h, int w, bool moveable)
 	rect.y = 0;
 }
 
-void object::render(SDL_Renderer* renderer, int x, int y)
+void Object::render(SDL_Renderer* renderer, int x, int y)
 {
 	/* OLD STUFF
 	if (x == NULL || y == NULL)
@@ -42,7 +42,7 @@ void object::render(SDL_Renderer* renderer, int x, int y)
 	SDL_RenderCopy(renderer, _texture, NULL, &rect);
 }
 
-bool object::setTexture(SDL_Texture* texture)
+bool Object::setTexture(SDL_Texture* texture)
 {
 	bool success = true;
 
@@ -69,7 +69,7 @@ void object::centerY(int y)
 }
 */
 
-object::~object()
+Object::~Object()
 {
 	SDL_DestroyTexture(_texture);
 	_texture = NULL;

@@ -1,16 +1,20 @@
 #pragma once
-#include "Header.h"
+#include "object.h"
 
-class menuItem
+class MenuItem : public Object
 {
 public:
 
     //object mObject;
-	menuItem(int x, int y, int w, int h);
-	~menuItem();
+	MenuItem(int x, int y, int w, int h);
+	~MenuItem();
 
-	SDL_Rect rect;
+	enum status
+	{
+		MOUSECLICK, MOUSEOVER, MOUSEHOLD, MOUSENOTHING
+	};
 
+	status mouseStatus;
 
 private:
 

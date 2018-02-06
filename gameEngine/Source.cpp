@@ -1,5 +1,7 @@
 #include "Header.h"
 
+#include "menuItem.h"
+
 const char* windowName = "A window";
 
 SDL_Window* window = NULL;
@@ -62,11 +64,13 @@ int main(int argc, char* args[])
 {
 	bool quit = false;
 
-	player player1(screen_width / 2, screen_height / 2, 200, 150);
+	Player player1(screen_width / 2, screen_height / 2, 200, 150);
 
-	object object1(150, 200, false);
+	Object object1(150, 200, false);
 
-	object screen(screen_height, screen_width, false);
+	Object screen(screen_height, screen_width, false);
+
+	MenuItem test(25, 34, 150, 200);
 
 	if (!init())
 	{
@@ -74,10 +78,12 @@ int main(int argc, char* args[])
 	}
 	else
 	{
-		myTexture vatar(renderer, "img/sabrine.BMP");
+		Texture sabrine(renderer, "img/sabrine.BMP");
+		Texture vatar(renderer, "img/vatar.PNG");
 		SDL_Event e;
 
-		object1.setTexture(vatar.texture);
+		object1.setTexture(sabrine.texture);
+		test.setTexture(vatar.texture);
 
 		if (!loadMedia())
 		{
@@ -136,21 +142,24 @@ int main(int argc, char* args[])
 
 				SDL_RenderClear(renderer);
 
-				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.rect);
+				SDL_RenderCopy(renderer, sabrine.texture, NULL, &player1.rect);
 
 				object1.render(renderer, (screen_width / 2) - (object1.rect.w/2), (screen_height / 2) - (object1.rect.h / 2));
+
+				test.render(renderer, test.rect.x, test.rect.y);
 
 				SDL_RenderPresent(renderer);
 
 				SDL_Delay(16);
 			}
 		}
-		vatar.~myTexture();
+		sabrine.~Texture();
+		vatar.~Texture();
 	}
 
-	object1.~object();
-	screen.~object();
-	player1.~player();
+	object1.~Object();
+	screen.~Object();
+	player1.~Player();
 
 	exit();
 

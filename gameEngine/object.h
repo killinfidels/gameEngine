@@ -1,13 +1,11 @@
 #pragma once
 #include "Header.h"
 
-class object
+class Object
 {
 public:
-	object(int h, int w, bool movable);
-	~object();
-
-	object(object&) = default;
+	Object(int h, int w, bool movable);
+	~Object();
 
 	void render(SDL_Renderer* renderer, int x, int y);
 

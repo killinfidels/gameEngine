@@ -1,6 +1,6 @@
 #include "player.h"
 
-player::player(int x, int y, int w, int h)
+Player::Player(int x, int y, int w, int h)
 {
 	//center player
 	rect.x = x - (w / 2);
@@ -9,28 +9,28 @@ player::player(int x, int y, int w, int h)
 	rect.h = h;
 }
 
-player::~player()
+Player::~Player()
 {
 	//SDL_DestroyTexture(_oTexture);
 	//_oTexture = NULL;
 }
 
-void player::move(directions _direction)
+void Player::move(directions _direction)
 {
 	direction = _direction;
 
 	switch (direction)
 	{
-	case player::UP:
+	case Player::UP:
 		velocity_y = velocity_y - speed;
 		break;
-	case player::DOWN:
+	case Player::DOWN:
 		velocity_y = velocity_y + speed;
 		break;
-	case player::LEFT:
+	case Player::LEFT:
 		velocity_x = velocity_x - speed;
 		break;
-	case player::RIGHT:
+	case Player::RIGHT:
 		velocity_x = velocity_x + speed;
 		break;
 
@@ -39,7 +39,7 @@ void player::move(directions _direction)
 	}
 }
 
-void player::slowDown(char s)
+void Player::slowDown(char s)
 {
 	switch (s)
 	{
@@ -89,7 +89,7 @@ void player::slowDown(char s)
 	}
 }
 
-void player::update()
+void Player::update()
 {
 	rect.x = rect.x + velocity_x;
 	
@@ -98,7 +98,7 @@ void player::update()
 	slowDown('b');
 }
 
-void player::collision(SDL_Rect oRect, bool inside)
+void Player::collision(SDL_Rect oRect, bool inside)
 {
 	//keeps the player inside the desired object
 	if (inside)
@@ -166,14 +166,14 @@ void player::collision(SDL_Rect oRect, bool inside)
 }
 
 //puts rect.x in received x cordinate and sets velocity_x to 0
-void player::stopX(int x)
+void Player::stopX(int x)
 {
 	rect.x = x;
 	velocity_x = 0;
 }
 
 //puts rect.y in received y cordinate and sets velocity_y to 0
-void player::stopY(int y)
+void Player::stopY(int y)
 {
 	rect.y = y;
 	velocity_y = 0;

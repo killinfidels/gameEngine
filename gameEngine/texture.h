@@ -1,11 +1,11 @@
 #pragma once
 #include "Header.h"
 
-class myTexture
+class Texture
 {
 public:
-	myTexture(SDL_Renderer* renderer, std::string path);
-	~myTexture();
+	Texture(SDL_Renderer* renderer, std::string path);
+	~Texture();
 
 	SDL_Surface* surface;
 	SDL_Texture* texture;

@@ -1,11 +1,11 @@
 #pragma once
 #include "Header.h"
 
-class player
+class Player
 {
 public:
-	player(int x, int y, int w, int h);
-	~player();
+	Player(int x, int y, int w, int h);
+	~Player();
 
 	SDL_Rect rect;
 
