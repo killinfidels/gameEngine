@@ -14,8 +14,13 @@ public:
 		MOUSECLICK, MOUSEOVER, MOUSEHOLD, MOUSENOTHING
 	};
 
-	status mouseStatus;
+	void MenuItem::eventHandler(SDL_Event* e)
+	bool MenuItem::pressed()
+	
 
 private:
-
+	int mouseX, mouseY;
+	
+	status clickStatus;
+	status locationStatus;
 };
