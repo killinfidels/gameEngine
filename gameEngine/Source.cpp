@@ -16,7 +16,7 @@ void exit();
 bool init()
 {
 	bool success = true;
-	
+
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
@@ -106,27 +106,22 @@ int main(int argc, char* args[])
 						switch (e.key.keysym.sym)
 						{
 						case SDLK_UP:
+                        case SDLK_w:
 							player1.move(player1.UP);
 							break;
+
 						case SDLK_DOWN:
+                        case SDLK_s:
 							player1.move(player1.DOWN);
 							break;
+
 						case SDLK_LEFT:
+                        case SDLK_a:
 							player1.move(player1.LEFT);
 							break;
+
 						case SDLK_RIGHT:
-							player1.move(player1.RIGHT);
-							break;
-						case SDLK_w:
-							player1.move(player1.UP);
-							break;
-						case SDLK_s:
-							player1.move(player1.DOWN);
-							break;
-						case SDLK_a:
-							player1.move(player1.LEFT);
-							break;
-						case SDLK_d:
+                        case SDLK_d:
 							player1.move(player1.RIGHT);
 							break;
 						default:
