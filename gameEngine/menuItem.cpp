@@ -27,13 +27,15 @@ void MenuItem::eventHandler(SDL_Event* e)
 		break;
 	}
 	
+	printf(mouseX, "/n")
+	printf(mouseY, "/n")
+	
 	if (!(mouseX > rect.x && mouseX < rect.x + rect.w))
 		locationStatus = MOUSENOTHING;
 	else if (!(mouseY > rect.y && mouseY < rect.y + rect.h))
 		locationStatus = MOUSENOTHING;
 	else
 		locationStatus = MOUSEOVER;
-				
 }
 
 bool MenuItem::pressed()

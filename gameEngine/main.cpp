@@ -80,6 +80,8 @@ int main(int argc, char* args[])
 	{
 		Texture sabrine(renderer, "img/sabrine.BMP");
 		Texture vatar(renderer, "img/vatar.PNG");
+		Texture hepl(renderer, "img/plshepl.jpg");
+		
 		SDL_Event e;
 
 		object1.setTexture(sabrine.texture);
@@ -130,6 +132,9 @@ int main(int argc, char* args[])
 						}
 					}
 				}
+				
+				if (test.pressed())
+					test.setTexture(hepl.texture);
 
 				player1.update();
 
