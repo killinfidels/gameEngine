@@ -7,7 +7,7 @@ public:
 	object(int h, int w, bool movable);
 	~object();
 
-	object(object&&) = default;
+	//object(object&&) = default;
 
 	void render(SDL_Renderer* renderer, int x, int y);
 

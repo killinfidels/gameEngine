@@ -68,6 +68,8 @@ int main(int argc, char* args[])
 
 	object screen(screen_height, screen_width, false);
 
+	menuItem play(300, 400, 300, 100);
+
 	if (!init())
 	{
 		SDL_Delay(5000);
@@ -75,8 +77,12 @@ int main(int argc, char* args[])
 	else
 	{
 		myTexture vatar(renderer, "img/sabrine.BMP");
+		myTexture paddle(renderer, "img/Paddle.png");
+		myTexture paddle2(renderer, "img/GamePaddle.png");
+
 		SDL_Event e;
 
+		play.setTextures(paddle2.texture, paddle.texture);
 		object1.setTexture(vatar.texture);
 
 		if (!loadMedia())
@@ -139,6 +145,8 @@ int main(int argc, char* args[])
 				SDL_RenderCopy(renderer, vatar.texture, NULL, &player1.rect);
 
 				object1.render(renderer, (screen_width / 2) - (object1.rect.w/2), (screen_height / 2) - (object1.rect.h / 2));
+
+				play.mObject.render(renderer, (screen_width / 2) - (object1.rect.w / 2), (screen_height / 2) - (object1.rect.h / 2));
 
 				SDL_RenderPresent(renderer);
 
