@@ -9,5 +9,5 @@
 #include "texture.h"
 
 
-const int screen_width = 1024;
-const int screen_height = 720;
+const int screen_width = 1366;
+const int screen_height = 768;

@@ -6,23 +6,19 @@ MenuItem::MenuItem(int x, int y, int w, int h) : Object(w, h, false)
 	rect.y = y;
 }
 
-void MenuItem::setTextures(SDL_Texture* pressedTexture, SDL_Texture* notPressedTexture)
+void MenuItem::setTextures(SDL_Texture* notPressedTexture, SDL_Texture* pressedTexture)
 {
 	pressed = pressedTexture;
 	notPressed = notPressedTexture;
+
+	setTexture(notPressed);
 }
 
 void MenuItem::eventHandler(SDL_Event* e)
 {
 	if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN)
 	{
-		mouseX = e->motion.x;
-		mouseY = e->motion.y;
-		//SDL_GetMouseState(&mouseX, &mouseY);
-
-		printf("x: ", mouseX);
-		printf("y: ", mouseY);
-		printf("-----");
+		SDL_GetMouseState(&mouseX, &mouseY);
 
 		if (!(mouseX > rect.x && mouseX < rect.x + rect.w && mouseY > rect.y && mouseY < rect.y + rect.h))
 			clicked = false;

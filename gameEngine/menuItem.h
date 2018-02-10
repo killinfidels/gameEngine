@@ -14,7 +14,7 @@ public:
 
 	void eventHandler(SDL_Event* e);
 	bool activated();
-	void setTextures(SDL_Texture* pressedTexture, SDL_Texture* notPressedTexture);
+	void setTextures(SDL_Texture* notPressedTexture, SDL_Texture* pressedTexture);
 	
 
 private:

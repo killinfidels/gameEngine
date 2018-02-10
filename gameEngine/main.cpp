@@ -90,7 +90,7 @@ int main(int argc, char* args[])
 
 		object1.setTexture(sabrine.texture);
 		test.setTextures(vatar.texture, sabrine.texture);
-		play.setTextures(paddle2.texture, paddle.texture);
+		play.setTextures(paddle.texture, paddle2.texture);
 		object1.setTexture(sabrine.texture);
 
 		if (!loadMedia())
@@ -109,6 +109,7 @@ int main(int argc, char* args[])
 					}
 					
 					test.eventHandler(&e);
+					play.eventHandler(&e);
 
 					if (e.type == SDL_KEYDOWN)
 					{
@@ -141,6 +142,8 @@ int main(int argc, char* args[])
 				
 				if (test.activated())
 					test.setTexture(hepl.texture);
+				if (play.activated())
+					play.setTexture(paddle2.texture);
 
 				player1.update();
 
@@ -155,20 +158,14 @@ int main(int argc, char* args[])
 
 				test.render(renderer, test.rect.x, test.rect.y);
 
-				play.render(renderer, (screen_width / 2) - (object1.rect.w / 2), (screen_height / 2) - (object1.rect.h / 2));
+				play.render(renderer, (screen_width / 2) - (play.rect.w / 2), (screen_height / 2) - (play.rect.h / 2));
 
 				SDL_RenderPresent(renderer);
 
 				SDL_Delay(16);
 			}
 		}
-		sabrine.~Texture();
-		vatar.~Texture();
 	}
-
-	object1.~Object();
-	screen.~Object();
-	player1.~Player();
 
 	exit();
 
