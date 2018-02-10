@@ -11,7 +11,7 @@ Texture::Texture(SDL_Renderer* renderer, std::string path)
 	if (texture == NULL)
 	{
 		printf("IMG_Load: %s\n", IMG_GetError());
-		printf("failed to load image:\n");
+		printf("failed to load image:\n", path);
 	}
 }
 

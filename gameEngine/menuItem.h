@@ -4,8 +4,6 @@
 class MenuItem : public Object
 {
 public:
-
-    //object mObject;
 	MenuItem(int x, int y, int w, int h);
 	~MenuItem();
 
@@ -14,8 +12,9 @@ public:
 		MOUSECLICK, MOUSEOVER, MOUSEHOLD, MOUSENOTHING
 	};
 
-	void MenuItem::eventHandler(SDL_Event* e)
-	bool MenuItem::pressed()
+	void eventHandler(SDL_Event* e);
+	bool activated();
+	void setTextures(SDL_Texture* pressedTexture, SDL_Texture* notPressedTexture);
 	
 
 private:
@@ -23,4 +22,9 @@ private:
 	
 	status clickStatus;
 	status locationStatus;
+
+	bool clicked = false;
+
+	SDL_Texture* pressed = NULL;
+	SDL_Texture* notPressed = NULL;
 };

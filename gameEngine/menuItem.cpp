@@ -4,47 +4,58 @@ MenuItem::MenuItem(int x, int y, int w, int h) : Object(w, h, false)
 {
 	rect.x = x;
 	rect.y = y;
+}
 
-	//mObject.rect.x = x;
-	//mObject.rect.y = y;
+void MenuItem::setTextures(SDL_Texture* pressedTexture, SDL_Texture* notPressedTexture)
+{
+	pressed = pressedTexture;
+	notPressed = notPressedTexture;
 }
 
 void MenuItem::eventHandler(SDL_Event* e)
 {
-//	SDL_MOUSEBUTTONDOWN
-//SDL_MOUSEBUTTONUP
-	switch(e->type)
+	if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN)
 	{
-	case MOUSEBUTTONDOWN:
-		clickStatus = MOUSECLICK
-		break;
-	case MOUSEMOTION:
 		mouseX = e->motion.x;
 		mouseY = e->motion.y;
-		break;
-	default:
-		clickStatus = MOUSENOTHING;
-		break;
+		//SDL_GetMouseState(&mouseX, &mouseY);
+
+		printf("x: ", mouseX);
+		printf("y: ", mouseY);
+		printf("-----");
+
+		if (!(mouseX > rect.x && mouseX < rect.x + rect.w && mouseY > rect.y && mouseY < rect.y + rect.h))
+			clicked = false;
+		else if (e->type != SDL_MOUSEBUTTONDOWN)
+			clicked = false;
+		else
+			clicked = true;
 	}
-	
-	printf(mouseX, "/n")
-	printf(mouseY, "/n")
-	
-	if (!(mouseX > rect.x && mouseX < rect.x + rect.w))
-		locationStatus = MOUSENOTHING;
-	else if (!(mouseY > rect.y && mouseY < rect.y + rect.h))
-		locationStatus = MOUSENOTHING;
 	else
-		locationStatus = MOUSEOVER;
+	{
+		clicked = false;
+	}
 }
 
-bool MenuItem::pressed()
+bool MenuItem::activated()
 {
-	if (clickStatus == MOUSECLICK && locationStatus)
-		return true;
-	return false;
+	/*
+	if (clicked)
+	{
+		setTexture(pressed);
+	}
+	else
+	{
+		setTexture(notPressed);
+	}
+	*/
+	return clicked;
 }
 
 MenuItem::~MenuItem()
 {
+	SDL_DestroyTexture(pressed);
+	pressed = NULL;
+	SDL_DestroyTexture(notPressed);
+	notPressed = NULL;
 }

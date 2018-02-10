@@ -72,6 +72,8 @@ int main(int argc, char* args[])
 
 	MenuItem test(25, 34, 150, 200);
 
+	MenuItem play(300, 400, 300, 100);
+
 	if (!init())
 	{
 		SDL_Delay(5000);
@@ -81,11 +83,15 @@ int main(int argc, char* args[])
 		Texture sabrine(renderer, "img/sabrine.BMP");
 		Texture vatar(renderer, "img/vatar.PNG");
 		Texture hepl(renderer, "img/plshepl.jpg");
+		Texture paddle(renderer, "img/Paddle.png");
+		Texture paddle2(renderer, "img/GamePaddle.png");
 		
 		SDL_Event e;
 
 		object1.setTexture(sabrine.texture);
-		test.setTexture(vatar.texture);
+		test.setTextures(vatar.texture, sabrine.texture);
+		play.setTextures(paddle2.texture, paddle.texture);
+		object1.setTexture(sabrine.texture);
 
 		if (!loadMedia())
 		{
@@ -102,7 +108,7 @@ int main(int argc, char* args[])
 						quit = true;
 					}
 					
-					test.eventHandler(*e);
+					test.eventHandler(&e);
 
 					if (e.type == SDL_KEYDOWN)
 					{
@@ -133,7 +139,7 @@ int main(int argc, char* args[])
 					}
 				}
 				
-				if (test.pressed())
+				if (test.activated())
 					test.setTexture(hepl.texture);
 
 				player1.update();
@@ -148,6 +154,8 @@ int main(int argc, char* args[])
 				object1.render(renderer, (screen_width / 2) - (object1.rect.w/2), (screen_height / 2) - (object1.rect.h / 2));
 
 				test.render(renderer, test.rect.x, test.rect.y);
+
+				play.render(renderer, (screen_width / 2) - (object1.rect.w / 2), (screen_height / 2) - (object1.rect.h / 2));
 
 				SDL_RenderPresent(renderer);
 
