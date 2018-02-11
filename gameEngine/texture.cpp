@@ -2,9 +2,12 @@
 
 Texture::Texture(SDL_Renderer* renderer, std::string path)
 {
-	std::string _path = path;
+	createTexture(renderer, path);
+}
 
-	surface = IMG_Load(_path.c_str());
+bool Texture::createTexture(SDL_Renderer* renderer, std::string path)
+{
+	surface = IMG_Load(path.c_str());
 
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -12,13 +15,42 @@ Texture::Texture(SDL_Renderer* renderer, std::string path)
 	{
 		printf("IMG_Load: %s\n", IMG_GetError());
 		printf("failed to load image:\n", path);
+
+		return false;
 	}
+
+	return true;
+}
+
+bool Texture::createTextureFromText(SDL_Renderer* renderer, TTF_Font* font, std::string path, SDL_Color color)
+{
+
+	surface = TTF_RenderText_Solid(font, path.c_str(), color);
+
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	if (texture == NULL)
+	{
+		printf("IMG_Load: %s\n", IMG_GetError());
+		printf("failed to load image:\n", path);
+
+		return false;
+	}
+
+	return true;
+}
+
+SDL_Texture* Texture::getTexture()
+{
+	return texture;
 }
 
 Texture::~Texture()
 {
-	surface = NULL;
+	//TTF_CloseFont(_font);
 
+	SDL_FreeSurface(surface);
+	surface = NULL;
 	SDL_DestroyTexture(texture);
 	texture = NULL;
 }

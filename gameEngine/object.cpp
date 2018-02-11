@@ -1,44 +1,13 @@
 #include "object.h"
 
-Object::Object(int h, int w, bool moveable)
+Object::Object(int w, int h, bool moveable)
 {
-	_texture = NULL;
-
-	_moveable = moveable;
-	
 	rect.h = h;
 	rect.w = w;
-	rect.x = 0;
-	rect.y = 0;
 }
 
-void Object::render(SDL_Renderer* renderer, int x, int y)
+void Object::render(SDL_Renderer* renderer)
 {
-	/* OLD STUFF
-	if (x == NULL || y == NULL)
-	{
-		if (!ERRORED)
-		{
-			printf("invalid cordinations, rendering object at 0, 0 \n");
-			ERRORED = true;
-		}
-
-		oRect.x = NULL;
-		oRect.y = NULL;
-	}
-	else
-	{
-		centerX(x);
-		centerY(y);
-
-		oRect.x = _x;
-		oRect.y = _y;
-	}
-	*/
-
-	rect.x = x;
-	rect.y = y;
-
 	SDL_RenderCopy(renderer, _texture, NULL, &rect);
 }
 
@@ -50,24 +19,92 @@ bool Object::setTexture(SDL_Texture* texture)
 
 	if (_texture == NULL)
 	{
-		printf("couldnt set object texture");
+		printf("couldnt set object texture\n");
 		success = false;
 	}
 
 	return success;
 }
 
-/*
-void object::centerX(int x)
+//puts rect.x in received x cordinate and sets velocity_x to 0
+void Object::stopX(int x)
 {
-	_x = x - (_w / 2);
+	rect.x = x;
+	velocity_x = 0;
 }
 
-void object::centerY(int y)
+//puts rect.y in received y cordinate and sets velocity_y to 0
+void Object::stopY(int y)
 {
-	_y = y - (_h / 2);
+	rect.y = y;
+	velocity_y = (velocity_y*-1) - ((velocity_y*-1) / 2);
 }
-*/
+
+void Object::update()
+{
+	if (velocity_x > maxSpeed)
+	{
+		velocity_x = maxSpeed;
+	}
+	if (velocity_x < -maxSpeed)
+	{
+		velocity_x = -maxSpeed;
+	}
+	if (velocity_y > maxSpeed)
+	{
+		velocity_y = maxSpeed;
+	}
+	if (velocity_y < -maxSpeed)
+	{
+		velocity_y = -maxSpeed;
+	}
+
+	rect.x = rect.x + velocity_x;
+
+	rect.y = rect.y + velocity_y;
+
+	if (!_moveable)
+	{
+		if (velocity_x > 0) { velocity_x = velocity_x - 0.1; }
+		else if (velocity_x < 0) { velocity_x = velocity_x + 0.1; }
+
+		if (velocity_y > 0.1) { velocity_y = velocity_y - 0.1; }
+		else if (velocity_y < -0.1) { velocity_y = velocity_y + 0.1; }
+		else velocity_y = 0;
+	}
+
+	/*
+	switch (s)
+	{
+	case 'x':
+
+		if (velocity_x > 0) { velocity_x--; }
+		else if (velocity_x < 0) { velocity_x++; }
+
+		break;
+
+	case 'y':
+
+		if (velocity_y > 0) { velocity_y--; }
+		else if (velocity_y < 0) { velocity_y++; }
+
+		break;
+
+	case 'b':
+
+		if (velocity_x > 0) { velocity_x--; }
+		else if (velocity_x < 0) { velocity_x++; }
+
+		if (velocity_y > 0) { velocity_y--; }
+		else if (velocity_y < 0) { velocity_y++; }
+
+		break;
+
+	default:
+		break;
+	}
+	*/
+}
 
 Object::~Object()
 {

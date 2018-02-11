@@ -1,18 +1,13 @@
 #include "player.h"
 
-Player::Player(int x, int y, int w, int h)
+Player::Player(int x, int y, int w, int h) : Object(w, h, false)
 {
-	//center player
-	rect.x = x - (w / 2);
-	rect.y = y - (h / 2);
-	rect.w = w;
-	rect.h = h;
+	rect.x = x;
+	rect.y = y;
 }
 
 Player::~Player()
 {
-	//SDL_DestroyTexture(_oTexture);
-	//_oTexture = NULL;
 }
 
 void Player::move(directions _direction)
@@ -37,65 +32,6 @@ void Player::move(directions _direction)
 	default:
 		break;
 	}
-}
-
-void Player::slowDown(char s)
-{
-	switch (s)
-	{
-	case 'x':
-
-		if (velocity_x > 0) { velocity_x--; }
-		else if (velocity_x < 0) { velocity_x++; }
-
-		break;
-
-	case 'y':
-
-		if (velocity_y > 0) { velocity_y--; }
-		else if (velocity_y < 0) { velocity_y++; }
-
-		break;
-
-	case 'b':
-
-		if (velocity_x > 0) { velocity_x--; }
-		else if (velocity_x < 0) { velocity_x++; }
-
-		if (velocity_y > 0) { velocity_y--; }
-		else if (velocity_y < 0) { velocity_y++; }
-
-		break;
-
-	default:
-		break;
-	}
-
-	if (velocity_x > maxSpeed)
-	{
-		velocity_x = maxSpeed;
-	}
-	if (velocity_x < -maxSpeed)
-	{
-		velocity_x = -maxSpeed;
-	}
-	if (velocity_y > maxSpeed)
-	{
-		velocity_y = maxSpeed;
-	}
-	if (velocity_y < -maxSpeed)
-	{
-		velocity_y = -maxSpeed;
-	}
-}
-
-void Player::update()
-{
-	rect.x = rect.x + velocity_x;
-	
-	rect.y = rect.y + velocity_y;
-
-	slowDown('b');
 }
 
 void Player::collision(SDL_Rect oRect, bool inside)
@@ -163,18 +99,4 @@ void Player::collision(SDL_Rect oRect, bool inside)
 			}
 		}
 	}
-}
-
-//puts rect.x in received x cordinate and sets velocity_x to 0
-void Player::stopX(int x)
-{
-	rect.x = x;
-	velocity_x = 0;
-}
-
-//puts rect.y in received y cordinate and sets velocity_y to 0
-void Player::stopY(int y)
-{
-	rect.y = y;
-	velocity_y = 0;
 }
