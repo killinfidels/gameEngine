@@ -107,9 +107,9 @@ void setTextures()
 	for (int i = 0; i < 11; i++) //creates textures for numbers 0 to 10 and stores them in the countNumbers array
 	{
 		if (i < 10) //adds an extra zero infront of numbers less than 10
-			countNumbers[i].createTextureFromText(renderer, arial, "0" + std::to_string(i), White);
+			countNumbers[i].createTextureFromText(renderer, arial, "0" + std::to_string(i), LightBlue);
 		else
-			countNumbers[i].createTextureFromText(renderer, arial, std::to_string(i), White);
+			countNumbers[i].createTextureFromText(renderer, arial, std::to_string(i), LightBlue);
 	}
 
 	//menu items
@@ -128,7 +128,7 @@ void setTextures()
 	player2.setTexture(paddle.getTexture());
 
 	//balls
-	ball.setTextures(circle.getTexture(), wokeball.getTexture()); //setting the balls default texture \circle texture
+	ball.setTextures(circle.getTexture(), glarpball.getTexture()); //setting the balls default texture \circle texture
 
 										  //text
 	counter1.setTexture(countNumbers[0].getTexture()); //setting the counters default texture \number 0 texture

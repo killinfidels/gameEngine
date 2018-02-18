@@ -53,14 +53,12 @@ MenuItem oWeeb(480, 320, 320, 80);
 MenuItem ball(screen_width / 2 - 15, screen_height / 2 - 15, 30, 30);
 
 //Texture objects
-Texture vatar(renderer, "img/vatar.png");
-Texture paddle(renderer, "img/paddle.png");
-Texture paddle2(renderer, "img/gamepaddle.png");
-Texture mainmenutemplate(renderer, "img/mainmenutemplate.bmp");
-Texture gamemap(renderer, "img/gamemap.png");
 Texture circle(renderer, "img/ball.png");
-Texture wokeball(renderer, "img/hyperglarp.png");
+Texture paddle(renderer, "img/paddle.png");
+Texture glarpball(renderer, "img/hyperglarp.png");
 
+Texture jojo(renderer, "img/jojobg.png");
+Texture gamemap(renderer, "img/gamemap.png");
 Texture mainmenu(renderer, "img/mainMenu.png");
 Texture pausemenu(renderer, "img/PauseScreen.png");
 Texture optionsmenu(renderer, "img/optionsMenu.png");
@@ -76,8 +74,6 @@ Texture tReturn(renderer, "img/pauseButtonReturn.png");
 Texture tWeebOn(renderer, "img/optionsButtonWeebOn.png");
 Texture tWeebOff(renderer, "img/optionsButtonWeebOff.png");
 
-Texture jojo(renderer, "img/jojobg.png");
-
 //text textures
 Texture winTextTexture;
 Texture countNumbers[11]; //textures to be used by the counter Object
@@ -86,6 +82,6 @@ Texture countNumbers[11]; //textures to be used by the counter Object
 		//Texture sabrine(renderer, "img/sabrine.bmp");
 
 //font stuff
-TTF_Font* arial = TTF_OpenFont("arial.ttf", 24);
-SDL_Color White = { 255, 255, 255 };
+TTF_Font* arial = TTF_OpenFont("fonts/arial.ttf", 24);
+SDL_Color LightBlue = { 200, 200, 255 };
 SDL_Color Red = { 255, 0, 0 };

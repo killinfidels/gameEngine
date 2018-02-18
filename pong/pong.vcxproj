@@ -133,18 +133,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\Ball.png" />
-    <Image Include="img\GameMap.png" />
-    <Image Include="img\GamePaddle.png" />
-    <Image Include="img\HyperGlarp.png" />
-    <Image Include="img\mainMenuTemplate.bmp" />
-    <Image Include="img\Paddle.png" />
-    <Image Include="img\PauseScreen.png" />
-    <Image Include="img\plshepl.jpg" />
-    <Image Include="img\sabrine.bmp" />
-    <Image Include="img\vatar.PNG" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\gameEngine\gameEngine.vcxproj">
       <Project>{0aa0494f-3688-4e55-892b-264a6325bda6}</Project>
     </ProjectReference>
