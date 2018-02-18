@@ -1,5 +1,5 @@
 #pragma once
-#include "Header.h"
+#include "basics.h"
 
 class Object
 {
@@ -7,9 +7,9 @@ public:
 	Object(int w, int h, bool movable);
 	~Object();
 
-	void render(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer);
 
-	bool _moveable;
+	bool dontSlowDown;
 	
 	void update();
 
@@ -21,12 +21,12 @@ protected:
 	SDL_Texture* _texture;
 
 	float speed = 0.5;
-	float maxSpeed = 10;
+	float maxSpeed = 20;
 
-	float velocity_x = 0;
-	float velocity_y = 0;
+	double velocity_x = 0;
+	double velocity_y = 0;
 
-	float accelleration;
+	double accelleration;
 
 	void stopX(int x);
 	void stopY(int y);
@@ -51,28 +51,31 @@ public:
 		return maxSpeed;
 	}
 
-	void setVelocityX(float velocity)
+	void setVelocityX(double velocity)
 	{
 		velocity_x = velocity;
-		accelleration = velocity / 5;
+		if (velocity_x < 0)
+			accelleration = (velocity / 5) * -1;
+		else
+			accelleration = velocity / 5;
 
 	}
-	void setVelocityY(float velocity)
+	void setVelocityY(double velocity)
 	{
 		velocity_y = velocity;
 	}
-	float getVelocityX()
+	double getVelocityX()
 	{
 		return velocity_x;
 	}
-	float getVelocityY()
+	double getVelocityY()
 	{
 		return velocity_y;
 	}
 	
 	int ballCollision(SDL_Rect bekt, bool inside)
 	{
-		int i = 0;
+		int duck = 0;
 		if (inside)
 		{
 			//keeps the player inside the desired object
@@ -81,18 +84,16 @@ public:
 				//left side collision
 				if (rect.x < bekt.x)
 				{
-					i = 2;
+					duck = 2;
 					velocity_x = velocity_x * -1;
 					rect.x = bekt.x;
-					accelleration = accelleration * -1;
 				}
 				//right side collision
 				if ((rect.x + rect.w) >(bekt.x + bekt.w))
 				{
-					i = 1;
+					duck = 1;
 					velocity_x = velocity_x * -1;
 					rect.x = bekt.w - rect.w;
-					accelleration = accelleration * -1;
 				}
 				//top side collision
 				if (rect.y < bekt.y)
@@ -121,20 +122,30 @@ public:
 
 			if (rect.x > bekt.x && rect.x < bekt.x + bekt.w)
 			{
+				duck = 3;
 				velocity_y = r;
-				velocity_x = (velocity_x + accelleration ) * -1;
-				accelleration = accelleration * -1;
+				if (velocity_x < 0)
+					velocity_x = velocity_x - accelleration;
+				else
+					velocity_x = velocity_x + accelleration;
+				velocity_x = velocity_x  * -1;
+				
 				rect.x = bekt.x + bekt.w;
 			}
 
 			if (rect.x + rect.w > bekt.x && rect.x + rect.w < bekt.x + bekt.w)
 			{
+				duck = 3;
 				velocity_y = r;
-				velocity_x = (velocity_x + accelleration) * -1;
-				accelleration = accelleration * -1;
+				if (velocity_x < 0)
+					velocity_x = velocity_x - accelleration;
+				else
+					velocity_x = velocity_x + accelleration;
+				velocity_x = velocity_x * -1;
+				
 				rect.x = bekt.x - rect.w;
 			}
 		}
-		return i;
+		return duck;
 	}
 };

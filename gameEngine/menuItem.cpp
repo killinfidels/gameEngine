@@ -16,7 +16,7 @@ void MenuItem::setTextures(SDL_Texture* notPressedTexture, SDL_Texture* pressedT
 
 void MenuItem::eventHandler(SDL_Event* e)
 {
-	if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN)
+	if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
 	{
 		SDL_GetMouseState(&mouseX, &mouseY);
 
@@ -35,16 +35,11 @@ void MenuItem::eventHandler(SDL_Event* e)
 
 bool MenuItem::activated()
 {
-	/*
 	if (clicked)
 	{
 		setTexture(pressed);
 	}
-	else
-	{
-		setTexture(notPressed);
-	}
-	*/
+
 	return clicked;
 }
 

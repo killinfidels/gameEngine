@@ -6,7 +6,7 @@ Object::Object(int w, int h, bool moveable)
 	rect.w = w;
 }
 
-void Object::render(SDL_Renderer* renderer)
+void Object::draw(SDL_Renderer* renderer)
 {
 	SDL_RenderCopy(renderer, _texture, NULL, &rect);
 }
@@ -63,7 +63,7 @@ void Object::update()
 
 	rect.y = rect.y + velocity_y;
 
-	if (!_moveable)
+	if (!dontSlowDown)
 	{
 		if (velocity_x > 0) { velocity_x = velocity_x - 0.1; }
 		else if (velocity_x < 0) { velocity_x = velocity_x + 0.1; }
@@ -72,38 +72,6 @@ void Object::update()
 		else if (velocity_y < -0.1) { velocity_y = velocity_y + 0.1; }
 		else velocity_y = 0;
 	}
-
-	/*
-	switch (s)
-	{
-	case 'x':
-
-		if (velocity_x > 0) { velocity_x--; }
-		else if (velocity_x < 0) { velocity_x++; }
-
-		break;
-
-	case 'y':
-
-		if (velocity_y > 0) { velocity_y--; }
-		else if (velocity_y < 0) { velocity_y++; }
-
-		break;
-
-	case 'b':
-
-		if (velocity_x > 0) { velocity_x--; }
-		else if (velocity_x < 0) { velocity_x++; }
-
-		if (velocity_y > 0) { velocity_y--; }
-		else if (velocity_y < 0) { velocity_y++; }
-
-		break;
-
-	default:
-		break;
-	}
-	*/
 }
 
 Object::~Object()
