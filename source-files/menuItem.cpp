@@ -1,4 +1,4 @@
-#include "menuItem.h"
+#include "../header-files/menuItem.h"
 
 MenuItem::MenuItem(int x, int y, int w, int h) : Object(w, h, false)
 {

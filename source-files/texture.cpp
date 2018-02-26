@@ -1,4 +1,4 @@
-#include "texture.h"
+#include "../header-files/texture.h"
 
 Texture::Texture(SDL_Renderer* renderer, std::string path)
 {

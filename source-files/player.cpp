@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../header-files/player.h"
 
 Player::Player(int x, int y, int w, int h) : Object(w, h, false)
 {

@@ -132,19 +132,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="menuItem.cpp" />
-    <ClCompile Include="object.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="gameEngine.cpp" />
-    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="source-files\gameEngine.cpp" />
+    <ClCompile Include="source-files\menuItem.cpp" />
+    <ClCompile Include="source-files\object.cpp" />
+    <ClCompile Include="source-files\player.cpp" />
+    <ClCompile Include="source-files\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameEngine.h" />
-    <ClInclude Include="menuItem.h" />
-    <ClInclude Include="object.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="basics.h" />
-    <ClInclude Include="texture.h" />
+    <ClInclude Include="header-files\basics.h" />
+    <ClInclude Include="header-files\gameEngine.h" />
+    <ClInclude Include="header-files\menuItem.h" />
+    <ClInclude Include="header-files\object.h" />
+    <ClInclude Include="header-files\player.h" />
+    <ClInclude Include="header-files\texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

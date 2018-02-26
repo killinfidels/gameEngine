@@ -1,4 +1,4 @@
-#include "object.h"
+#include "../header-files/object.h"
 
 Object::Object(int w, int h, bool moveable)
 {
