@@ -9,6 +9,19 @@ Object::Object(int w, int h, WindowM* _window)
 	renderer = _window->getRenderer();
 }
 
+Object::Object()
+{
+	rect.h = 0;
+	rect.w = 0;
+	rect.y = 0;
+	rect.x = 0;
+}
+
+void Object::setRenderer(SDL_Renderer* _renderer)
+{
+	renderer = _renderer;
+}
+
 void Object::draw()
 {
 	SDL_RenderCopy(renderer, _texture, NULL, &rect);

@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="source-files\animation.cpp" />
     <ClCompile Include="source-files\gameEngine.cpp" />
+    <ClCompile Include="source-files\gamemap.cpp" />
     <ClCompile Include="source-files\menuItem.cpp" />
     <ClCompile Include="source-files\object.cpp" />
     <ClCompile Include="source-files\player.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="header-files\animation.h" />
     <ClInclude Include="header-files\basics.h" />
     <ClInclude Include="header-files\gameEngine.h" />
+    <ClInclude Include="header-files\gamemap.h" />
     <ClInclude Include="header-files\menuItem.h" />
     <ClInclude Include="header-files\object.h" />
     <ClInclude Include="header-files\player.h" />

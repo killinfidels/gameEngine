@@ -19,7 +19,7 @@ public:
 
     void drawMap();
 
-    void setCamXY(int _camX, _camY);
+    void setCamXY(int _camX, int _camY);
 
 private:
     std::string path;
@@ -34,6 +34,6 @@ private:
     SDL_Renderer* renderer = NULL;
 
     int tileN = 0;
-    int w, h, x, y;
+    int w, h, tW, tH;
     int camX = 0, camY = 0;
-}
+};

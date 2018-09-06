@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "menuItem.h"
 #include "animation.h"
+#include "gamemap.h"
 
 bool init();
 

@@ -1,17 +1,20 @@
 #include "../header-files/gamemap.h"
 
-GameMap::GameMap(int mapW, int mapH, int tileX, int tileY)
+GameMap::GameMap(int mapW, int mapH, int tileW, int tileH)
 {
     w = mapW;
     h = mapH;
 
-    tileMap.resize(w);
-    tileMapId.resize(w);
+	tW = tileW;
+	tH = tileH;
 
-    for(int i = 0; i < w; i++)
+    tileMap.resize(h);
+    tileMapId.resize(h);
+
+    for(int i = 0; i < h; i++)
     {
-        tileMap[i].resize(h);
-        tileMapId[i].resize(h);
+        tileMap[i].resize(w);
+        tileMapId[i].resize(w);
     }
 }
 
@@ -20,7 +23,7 @@ GameMap::~GameMap() {}
 void GameMap::setRenderer(SDL_Renderer* _renderer)
 { renderer = _renderer; }
 
-void GameMap::setCamXY(int _camX, _camY)
+void GameMap::setCamXY(int _camX, int _camY)
 { camX = _camX; camY = _camY; }
 
 void GameMap::setTileTextures(std::string tilePath)
@@ -57,21 +60,25 @@ void GameMap::setTileTextures(std::string tilePath)
 
 void GameMap::createMap()
 {
-    for (int i = 0; i < w; i++)
+    for (int hhh = 0; hhh < h; hhh++)
     {
-        int yObjectPos = camY;
-        for (int b = 0; b < h; b++)
-        {
-            Object[i][b].setRenderer(renderer);
+        int xObjectPos = camX;
 
-            if (tileMapId[i][b] < 0 && tileMapId[i][b] >= tileN)
+        for (int www = 0; www < w; www++)
+        {
+			tileMap[hhh][www].rect.x = xObjectPos;
+			xObjectPos = xObjectPos + tW;
+
+			tileMap[hhh][www].setRenderer(renderer);
+
+            if (tileMapId[hhh][www] < 0 && tileMapId[hhh][www] >= tileN)
             {
-                printf("the tile is not valid:", tileMapId[i][b])
-                Object[i][b].clearTexture();
+				printf("the tile is not valid:", tileMapId[hhh][www]);
+                tileMap[hhh][www].clearTexture();
             }
             else 
             {
-                Object[i][b].setTexture(tileTextures[tileMapId[i][b]].getTexture());
+				tileMap[hhh][www].setTexture(tileTextures[tileMapId[hhh][www]].getTexture());
             }
         }
     }

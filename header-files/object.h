@@ -6,6 +6,7 @@ class Object
 {
 public:
 	Object(int w, int h, WindowM* _window);
+	Object();
 	~Object();
 
 	void draw();
@@ -15,6 +16,8 @@ public:
 	void updateMovement();
 
 	void clearTexture();
+
+	void setRenderer(SDL_Renderer* _renderer);
 
 	SDL_Rect rect;
 
