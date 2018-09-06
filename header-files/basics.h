@@ -4,3 +4,8 @@
 #include <SDL_ttf.h>
 #include <stdio.h>
 #include <string>
+#include <vector>
+#include <iostream>
+#include <time.h>
+#include <cstdlib>
+#include <ctime>

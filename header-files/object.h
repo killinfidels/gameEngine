@@ -1,21 +1,27 @@
 #pragma once
 #include "basics.h"
+#include "windows.h"
 
 class Object
 {
 public:
-	Object(int w, int h, bool movable);
+	Object(int w, int h, WindowM* _window);
 	~Object();
 
-	void draw(SDL_Renderer* renderer);
+	void draw();
 
-	bool dontSlowDown;
+	bool dontSlowDown = true;
 	
-	void update();
+	void updateMovement();
+
+	void clearTexture();
 
 	SDL_Rect rect;
 
 protected:
+	SDL_Window* window = NULL;
+	SDL_Renderer* renderer = NULL;
+
 	bool ERRORED = false;
 
 	SDL_Texture* _texture;
@@ -73,9 +79,9 @@ public:
 		return velocity_y;
 	}
 	
-	int ballCollision(SDL_Rect bekt, bool inside)
+	bool collision(SDL_Rect bekt, bool inside)
 	{
-		int duck = 0;
+		bool col = false;
 		if (inside)
 		{
 			//keeps the player inside the desired object
@@ -84,68 +90,65 @@ public:
 				//left side collision
 				if (rect.x < bekt.x)
 				{
-					duck = 2;
-					velocity_x = velocity_x * -1;
 					rect.x = bekt.x;
+					col = true;
 				}
 				//right side collision
 				if ((rect.x + rect.w) >(bekt.x + bekt.w))
 				{
-					duck = 1;
-					velocity_x = velocity_x * -1;
 					rect.x = bekt.w - rect.w;
+					col = true;
 				}
 				//top side collision
 				if (rect.y < bekt.y)
 				{
-					velocity_y = velocity_y * -1;
 					rect.y = bekt.y;
+					col = true;
 				}
 				//bottom side collision
 				if ((rect.y + rect.h) >(bekt.y + bekt.h))
 				{
-					velocity_y = velocity_y * -1;
 					rect.y = bekt.h - rect.h;
+					col = true;
 				}
 			}
 		}
 		else if (rect.y + rect.h > bekt.y && rect.y < bekt.y + bekt.h)
 		{
-			float r = 0;
-			
-			float middle = 2;
-
-			while (r < middle && r > -middle)
-			{
-				r = (rand() / (float)RAND_MAX * 10) - 5;
-			}
-
 			if (rect.x > bekt.x && rect.x < bekt.x + bekt.w)
 			{
-				duck = 3;
-				velocity_y = r;
-				if (velocity_x < 0)
-					velocity_x = velocity_x - accelleration;
-				else
-					velocity_x = velocity_x + accelleration;
-				velocity_x = velocity_x  * -1;
-				
+				velocity_x = 0;
 				rect.x = bekt.x + bekt.w;
+				col = true;
 			}
 
 			if (rect.x + rect.w > bekt.x && rect.x + rect.w < bekt.x + bekt.w)
 			{
-				duck = 3;
-				velocity_y = r;
-				if (velocity_x < 0)
-					velocity_x = velocity_x - accelleration;
-				else
-					velocity_x = velocity_x + accelleration;
-				velocity_x = velocity_x * -1;
+				velocity_x = 0;
 				
 				rect.x = bekt.x - rect.w;
+				col = true;
+			}	
+		}
+		//if the player is in the correct x position to make a collision
+		else if ((rect.x + rect.w) > bekt.x && rect.x < (bekt.x + bekt.w))
+		{
+			//top side of the object
+			if ((rect.y + rect.h) > bekt.y && (rect.y + rect.h) < (bekt.y + bekt.h))
+			{
+				velocity_y = 0;
+				rect.y = bekt.y - rect.h;
+				col = true;
+			}
+			//bottom side of the object
+			if ((rect.y < (bekt.y + bekt.h) && rect.y > bekt.y))
+			{
+				velocity_y = 0;
+				rect.y = bekt.y + bekt.h;
+				col = true;
 			}
 		}
-		return duck;
+
+		return col;
 	}
 };

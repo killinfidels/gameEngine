@@ -1,78 +1,92 @@
 #include "../header-files/gameEngine.h"
 
-SDL_Window* window = NULL;
-SDL_Renderer* renderer = NULL;
+Uint32 FPSticks = 0;
 
 void setFPS(int fps)
 {
-	SDL_Delay(1000 / fps);
+	FPSticks = SDL_GetTicks() - FPSticks;
+
+	if (1000 / fps >= FPSticks)
+		SDL_Delay(1000 / fps - FPSticks);
+
+	FPSticks = SDL_GetTicks();
 }
 
 void KeyboardHandler::handleKeyboardEvent(SDL_Event* event)
 {
-	keyState[event->key.keysym.sym] = event->key.state;
+	keyState.setFlag(event->key.keysym.sym, event->key.state);
 }
 
 bool KeyboardHandler::isPressed(int keyCode)
 {
-	return (keyState[keyCode] == SDL_PRESSED);
+	return (keyState.checkFlag(keyCode) == SDL_PRESSED);
 }
 
 bool KeyboardHandler::isReleased(int keyCode)
 {
-	return (keyState[keyCode] == SDL_RELEASED);
+	return (keyState.checkFlag(keyCode) == SDL_RELEASED);
 }
 
-bool init(const char* name, const int width, const int height)
+FlagArrays::FlagArrays(int _size)
+{
+	flags.resize(_size);
+}
+
+FlagArrays::FlagArrays()
+{
+}
+
+void FlagArrays::resize(int flag)
+{
+	if (flag + 1 > size)
+	{
+		flags.resize(flag + 1);
+
+		for (size; size < flag + 1; size++)
+		{
+			flags[flag] = false;
+		}
+	}
+}
+
+void FlagArrays::setFlag(int flag, bool state)
+{
+	resize(flag);
+
+	flags[flag] = state;
+}
+
+bool FlagArrays::checkFlag(int flag)
+{
+	resize(flag);
+
+	return flags[flag];
+}
+
+bool init()
 {
 	srand(time(NULL));
 
 	bool success = true;
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		success = false;
 	}
 	else
 	{
-		window = SDL_CreateWindow(name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, NULL);
-
-		if (window == NULL)
+		if (!IMG_Init)
 		{
-			printf("it deded/n");
-			printf(SDL_GetError());
-
-			success = false;
+			printf("imagededed/n");
+			printf(IMG_GetError());
 		}
 		else
 		{
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-			if (renderer == NULL)
+			if (!TTF_Init() == -1)
 			{
-				printf("it drendededed/n");
-				printf(SDL_GetError());
-
-				success = false;
-			}
-			else
-			{
-				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-				if (!IMG_Init)
-				{
-					printf("imagededed/n");
-					printf(IMG_GetError());
-				}
-				else
-				{
-					if (!TTF_Init() == -1)
-					{
-						printf("ttfdeded/n");
-						printf(TTF_GetError());
-					}
-				}
+				printf("ttfdeded/n");
+				printf(TTF_GetError());
 			}
 		}
 	}
@@ -82,11 +96,6 @@ bool init(const char* name, const int width, const int height)
 
 void close()
 {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	window = NULL;
-	renderer = NULL;
-
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

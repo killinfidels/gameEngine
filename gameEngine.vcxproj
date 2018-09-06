@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -132,19 +132,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source-files\animation.cpp" />
     <ClCompile Include="source-files\gameEngine.cpp" />
     <ClCompile Include="source-files\menuItem.cpp" />
     <ClCompile Include="source-files\object.cpp" />
     <ClCompile Include="source-files\player.cpp" />
+    <ClCompile Include="source-files\storage.cpp" />
     <ClCompile Include="source-files\texture.cpp" />
+    <ClCompile Include="source-files\windows.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="header-files\animation.h" />
     <ClInclude Include="header-files\basics.h" />
     <ClInclude Include="header-files\gameEngine.h" />
     <ClInclude Include="header-files\menuItem.h" />
     <ClInclude Include="header-files\object.h" />
     <ClInclude Include="header-files\player.h" />
+    <ClInclude Include="header-files\storage.h" />
     <ClInclude Include="header-files\texture.h" />
+    <ClInclude Include="header-files\windows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

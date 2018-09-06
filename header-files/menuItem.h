@@ -1,10 +1,11 @@
 #pragma once
 #include "basics.h"
 #include "object.h"
+
 class MenuItem : public Object
 {
 public:
-	MenuItem(int x, int y, int w, int h);
+	MenuItem(int x, int y, int w, int h, WindowM* _window);
 	~MenuItem();
 
 	enum status

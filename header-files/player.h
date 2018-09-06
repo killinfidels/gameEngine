@@ -8,8 +8,6 @@ public:
 	Player(int x, int y, int w, int h);
 	~Player();
 
-	void collision(SDL_Rect cObject, bool inside);
-
 	enum directions
 	{
 		LEFT, RIGHT, UP, DOWN

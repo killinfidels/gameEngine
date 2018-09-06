@@ -1,11 +1,18 @@
 #include "../header-files/texture.h"
 
-Texture::Texture(SDL_Renderer* renderer, std::string path)
+Texture::Texture(std::string path, WindowM* _window)
 {
-	createTexture(renderer, path);
+	renderer = _window->getRenderer();
+
+	createTexture(path);
 }
 
-bool Texture::createTexture(SDL_Renderer* renderer, std::string path)
+void Texture::setRenderer(SDL_Renderer* _renderer)
+{
+	renderer = _renderer;
+}
+
+bool Texture::createTexture(std::string path)
 {
 	surface = IMG_Load(path.c_str());
 
@@ -22,7 +29,7 @@ bool Texture::createTexture(SDL_Renderer* renderer, std::string path)
 	return true;
 }
 
-bool Texture::createTextureFromText(SDL_Renderer* renderer, TTF_Font* font, std::string path, SDL_Color color)
+bool Texture::createTextureFromText(TTF_Font* font, std::string path, SDL_Color color)
 {
 
 	surface = TTF_RenderText_Solid(font, path.c_str(), color);

@@ -1,5 +1,6 @@
 #pragma once
 #include "basics.h"
+#include "windows.h"
 
 class Texture
 {
@@ -7,19 +8,23 @@ public:
 
 	Texture(){}
 
-	Texture(SDL_Renderer* renderer, std::string path);
+	Texture(std::string path, WindowM* _window);
 	
 	~Texture();
 
-	bool createTexture(SDL_Renderer* renderer, std::string path);
+	void setRenderer(SDL_Renderer* _renderer);
 
-	bool createTextureFromText(SDL_Renderer* renderer, TTF_Font* font, std::string path, SDL_Color color);
+	bool createTexture(std::string path);
+
+	bool createTextureFromText(TTF_Font* font, std::string path, SDL_Color color);
 
 	SDL_Texture* getTexture();
 
 private:
 	SDL_Surface* surface;
 	SDL_Texture* texture;
+
+	SDL_Renderer* renderer;
 
 	std::string _path;
 };

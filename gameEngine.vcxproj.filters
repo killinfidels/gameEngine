@@ -24,10 +24,19 @@
     <ClCompile Include="source-files\object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source-files\player.cpp">
+    <ClCompile Include="source-files\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source-files\texture.cpp">
+    <ClCompile Include="source-files\animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source-files\storage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source-files\player.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source-files\windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +53,19 @@
     <ClInclude Include="header-files\object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header-files\player.h">
+    <ClInclude Include="header-files\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="header-files\texture.h">
+    <ClInclude Include="header-files\animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header-files\storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header-files\player.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="header-files\windows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

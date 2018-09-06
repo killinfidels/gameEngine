@@ -1,12 +1,15 @@
 #include "../header-files/object.h"
 
-Object::Object(int w, int h, bool moveable)
+Object::Object(int w, int h, WindowM* _window)
 {
 	rect.h = h;
 	rect.w = w;
+
+	window = _window->getWindow();
+	renderer = _window->getRenderer();
 }
 
-void Object::draw(SDL_Renderer* renderer)
+void Object::draw()
 {
 	SDL_RenderCopy(renderer, _texture, NULL, &rect);
 }
@@ -26,6 +29,11 @@ bool Object::setTexture(SDL_Texture* texture)
 	return success;
 }
 
+void Object::clearTexture()
+{
+	_texture = NULL;
+}
+
 //puts rect.x in received x cordinate and sets velocity_x to 0
 void Object::stopX(int x)
 {
@@ -37,10 +45,10 @@ void Object::stopX(int x)
 void Object::stopY(int y)
 {
 	rect.y = y;
-	velocity_y = (velocity_y*-1) - ((velocity_y*-1) / 2);
+	velocity_y = 0;
 }
 
-void Object::update()
+void Object::updateMovement()
 {
 	if (velocity_x > maxSpeed)
 	{
@@ -63,6 +71,7 @@ void Object::update()
 
 	rect.y = rect.y + velocity_y;
 
+	/*
 	if (!dontSlowDown)
 	{
 		if (velocity_x > 0) { velocity_x = velocity_x - 0.1; }
@@ -72,6 +81,7 @@ void Object::update()
 		else if (velocity_y < -0.1) { velocity_y = velocity_y + 0.1; }
 		else velocity_y = 0;
 	}
+	*/
 }
 
 Object::~Object()
