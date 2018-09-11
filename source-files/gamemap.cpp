@@ -16,6 +16,16 @@ GameMap::GameMap(int mapW, int mapH, int tileW, int tileH)
         tileMap[i].resize(w);
         tileMapId[i].resize(w);
     }
+
+	for (int hhh = 0; hhh < h; hhh++)
+		for (int www = 0; www < w; www++)
+		{
+			tileMapId[hhh][www] = 0;
+
+			tileMap[hhh][www].rect.w = tW;
+			tileMap[hhh][www].rect.h = tH;
+		}
+			
 }
 
 GameMap::~GameMap() {}
@@ -60,14 +70,18 @@ void GameMap::setTileTextures(std::string tilePath)
 
 void GameMap::createMap()
 {
+	int yObjectPos = camY;
+
     for (int hhh = 0; hhh < h; hhh++)
     {
         int xObjectPos = camX;
-
+		
         for (int www = 0; www < w; www++)
         {
 			tileMap[hhh][www].rect.x = xObjectPos;
 			xObjectPos = xObjectPos + tW;
+
+			tileMap[hhh][www].rect.y = yObjectPos;
 
 			tileMap[hhh][www].setRenderer(renderer);
 
@@ -81,7 +95,23 @@ void GameMap::createMap()
 				tileMap[hhh][www].setTexture(tileTextures[tileMapId[hhh][www]].getTexture());
             }
         }
+
+		yObjectPos = yObjectPos + tH;
     }
 
     printf("map created, ready for rendering\n");
+}
+
+void GameMap::drawMap()
+{
+	for (int hhh = 0; hhh < h; hhh++)
+		for (int www = 0; www < w; www++)
+			tileMap[hhh][www].draw();
+}
+
+void GameMap::setTileMap(std::vector<std::vector<int>> _tileMap)
+{
+	for (int hhh = 0; hhh < h; hhh++)
+		for (int www = 0; www < w; www++)
+			tileMapId[hhh][www] = _tileMap[hhh][www];
 }
