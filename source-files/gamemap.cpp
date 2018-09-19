@@ -34,7 +34,27 @@ void GameMap::setRenderer(SDL_Renderer* _renderer)
 { renderer = _renderer; }
 
 void GameMap::setCamXY(int _camX, int _camY)
-{ camX = _camX; camY = _camY; }
+{ 
+	camX = _camX;
+	camY = _camY;
+	
+	int yObjectPos = camY;
+
+	for (int hhh = 0; hhh < h; hhh++)
+	{
+		int xObjectPos = camX;
+
+		for (int www = 0; www < w; www++)
+		{
+			tileMap[hhh][www].rect.x = xObjectPos;
+			xObjectPos = xObjectPos + tW;
+
+			tileMap[hhh][www].rect.y = yObjectPos;
+		}
+
+		yObjectPos = yObjectPos + tH;
+	}
+}
 
 void GameMap::setTileTextures(std::string tilePath)
 {
