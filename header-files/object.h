@@ -21,6 +21,10 @@ public:
 
 	SDL_Rect rect;
 
+	bool sprite = false;
+
+	SDL_Rect textureRect;
+
 protected:
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;

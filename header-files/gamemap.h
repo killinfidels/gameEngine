@@ -14,12 +14,15 @@ public:
     void setTileMap( std::vector<std::vector<int>> _tileMap);
 
     void setTileTextures(std::string tilePath);
+	void setTilesTexture(std::string tilePath);
 
     void createMap();
 
     void drawMap();
 
     void setCamXY(int _camX, int _camY);
+
+	void setMapFromFile(std::string mapPath);
 
 private:
     std::string path;
@@ -30,8 +33,13 @@ private:
     Texture countingTexture;
 
     std::vector<Texture> tileTextures;
+	Texture tilesTexture;
+
+	std::vector<SDL_Rect> tileRects;
 
     SDL_Renderer* renderer = NULL;
+
+	bool sheet = false;
 
     int tileN = 0;
     int w, h, tW, tH;

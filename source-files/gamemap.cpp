@@ -104,16 +104,23 @@ void GameMap::createMap()
 			tileMap[hhh][www].rect.y = yObjectPos;
 
 			tileMap[hhh][www].setRenderer(renderer);
-
-            if (tileMapId[hhh][www] < 0 && tileMapId[hhh][www] >= tileN)
-            {
-				printf("the tile is not valid:", tileMapId[hhh][www]);
-                tileMap[hhh][www].clearTexture();
-            }
-            else 
-            {
-				tileMap[hhh][www].setTexture(tileTextures[tileMapId[hhh][www]].getTexture());
-            }
+			if (sheet)
+			{
+				tileMap[hhh][www].setTexture(tilesTexture.getTexture());
+				tileMap[hhh][www].textureRect = tileRects[tileMapId[hhh][www]];
+			}
+			else
+			{
+				if (tileMapId[hhh][www] < 0 && tileMapId[hhh][www] >= tileN)
+				{
+					printf("the tile is not valid:", tileMapId[hhh][www]);
+					tileMap[hhh][www].clearTexture();
+				}
+				else
+				{
+					tileMap[hhh][www].setTexture(tileTextures[tileMapId[hhh][www]].getTexture());
+				}
+			}
         }
 
 		yObjectPos = yObjectPos + tH;
@@ -134,4 +141,72 @@ void GameMap::setTileMap(std::vector<std::vector<int>> _tileMap)
 	for (int hhh = 0; hhh < h; hhh++)
 		for (int www = 0; www < w; www++)
 			tileMapId[hhh][www] = _tileMap[hhh][www];
+}
+
+void GameMap::setMapFromFile(std::string mapPath)
+{
+
+}
+
+void GameMap::setTilesTexture(std::string tilePath)
+{
+	sheet = true;
+
+	int tileSheetWidth, tileSheetHeight;
+	int tileTextureWidth, tileTextureHeight;
+	int tileSheetColumns, tileCount;
+
+	std::ifstream tilefile;
+	std::string line;
+
+	tilesTexture.createTexture(tilePath + ".png");
+
+	tilefile.open(tilePath + ".tsx", std::ios::in);
+
+	if (!tilefile.is_open())
+	{
+		printf("could not open tile file:", tilePath + ".tsx");
+	}
+	else
+	{
+		while (std::getline(tilefile, line))
+		{
+			std::cout << line << '\n';
+			
+			int pos;
+			std::string number;
+
+			pos = line.find("tilewidth");
+			pos = line.find("\"", pos) + 1;
+
+			number = line.substr(pos, line.find("\"", pos) - pos);
+		}
+
+		tilefile.close();
+	}
+
+	int tilesPerColumn = tileSheetWidth / tileTextureWidth;
+
+	int tilesSet = 0;
+
+	tileRects.resize(tileCount);
+
+	for (int cols = 0; cols < tileSheetColumns; cols++)
+	{
+		for (int tiles = 0; tiles < tilesPerColumn; tiles++)
+		{
+			tileRects[tilesSet].x = tileTextureWidth * tiles;
+			tileRects[tilesSet].y = tileTextureHeight * cols;
+			tileRects[tilesSet].w = tileTextureWidth;
+			tileRects[tilesSet].h = tileTextureHeight;
+
+			tilesSet++;
+
+			if (tilesSet == tileCount)
+			{
+				tiles = tilesPerColumn;
+				cols = tileSheetColumns;
+			}
+		}
+	}
 }

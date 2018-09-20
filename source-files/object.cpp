@@ -24,7 +24,15 @@ void Object::setRenderer(SDL_Renderer* _renderer)
 
 void Object::draw()
 {
-	SDL_RenderCopy(renderer, _texture, NULL, &rect);
+	if (sprite)
+	{
+		SDL_RenderCopy(renderer, _texture, &textureRect, &rect);
+	}
+	else
+	{
+		SDL_RenderCopy(renderer, _texture, NULL, &rect);
+	}
+	
 }
 
 bool Object::setTexture(SDL_Texture* texture)
