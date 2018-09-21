@@ -25,7 +25,7 @@ private:
 	int currentFrame = 0;
 	int frameN = 0;
 
-	Texture countingTexture;
+	//Texture countingTexture;
 
 	std::string path;
 	std::string name;

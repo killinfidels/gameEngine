@@ -24,15 +24,57 @@ void Object::setRenderer(SDL_Renderer* _renderer)
 
 void Object::draw()
 {
-	if (sprite)
+	SDL_Rect zerro;
+
+	zerro.x = 0;
+	zerro.y = 0;
+	zerro.w = 0;
+	zerro.h = 0;
+
+	draw(zerro);
+}
+
+void Object::draw(SDL_Rect cam)
+{
+	SDL_Rect renderRect;
+
+	renderRect.x = rect.x - cam.x;
+	renderRect.y = rect.y - cam.y;
+	renderRect.w = cam.w;
+	renderRect.h = cam.h;
+
+	if (cam.w == 0)
 	{
-		SDL_RenderCopy(renderer, _texture, &textureRect, &rect);
+		renderRect.w = rect.w;
+		renderRect.h = rect.h;
+
+		if (sprite)
+		{
+			SDL_RenderCopy(renderer, _texture, &textureRect, &renderRect);
+		}
+		else
+		{
+			SDL_RenderCopy(renderer, _texture, NULL, &renderRect);
+		}
 	}
 	else
 	{
-		SDL_RenderCopy(renderer, _texture, NULL, &rect);
+		if ((renderRect.x + rect.w > 0 && renderRect.x < renderRect.w)
+			&& (renderRect.y + rect.h > 0 && renderRect.y < cam.h))
+		{
+			renderRect.w = rect.w;
+			renderRect.h = rect.h;
+
+			if (sprite)
+			{
+				SDL_RenderCopy(renderer, _texture, &textureRect, &renderRect);
+			}
+			else
+			{
+				SDL_RenderCopy(renderer, _texture, NULL, &renderRect);
+			}
+		}
 	}
-	
 }
 
 bool Object::setTexture(SDL_Texture* texture)
@@ -92,17 +134,36 @@ void Object::updateMovement()
 
 	rect.y = rect.y + velocity_y;
 
-	/*
 	if (!dontSlowDown)
 	{
-		if (velocity_x > 0) { velocity_x = velocity_x - 0.1; }
-		else if (velocity_x < 0) { velocity_x = velocity_x + 0.1; }
+		float minSpeed = 1;
+		float slowdown = 0.5;
 
-		if (velocity_y > 0.1) { velocity_y = velocity_y - 0.1; }
-		else if (velocity_y < -0.1) { velocity_y = velocity_y + 0.1; }
-		else velocity_y = 0;
+		if (velocity_y > 0)
+			if (velocity_y < minSpeed)
+				velocity_y = 0;
+			else
+				velocity_y = velocity_y - slowdown;
+
+		if (velocity_y < 0)
+			if (velocity_y > -minSpeed)
+				velocity_y = 0;
+			else
+				velocity_y = velocity_y + slowdown;
+
+
+		if (velocity_x > 0)
+			if (velocity_x < minSpeed)
+				velocity_x = 0;
+			else
+				velocity_x = velocity_x - slowdown;
+
+		if (velocity_x < 0)
+			if (velocity_x > -minSpeed)
+				velocity_x = 0;
+			else
+				velocity_x = velocity_x + slowdown;
 	}
-	*/
 }
 
 Object::~Object()

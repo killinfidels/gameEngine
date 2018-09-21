@@ -5,18 +5,19 @@ Animation::Animation(std::string _name, std::string _path, WindowM* _window)
 	window = _window->getWindow();
 	renderer = _window->getRenderer();
 
-	countingTexture.setRenderer(renderer);
+	//countingTexture.setRenderer(renderer);
 
 	path = _path + "/";
 	name = _name;
 	dataPath = path + name + ".txt";
 
-
 	//count number of frames -- frameN
 	bool picsLeft = true;
 	do
 	{
-		if (countingTexture.createTexture(path + std::to_string(frameN) + ".png"))
+		std::string temp = path + std::to_string(frameN) + ".png";
+
+		if (IMG_Load(temp.c_str()))
 		{
 			frameN++;
 		}
@@ -27,8 +28,6 @@ Animation::Animation(std::string _name, std::string _path, WindowM* _window)
 	} while (picsLeft);
 
 	std::cout << "there are " << frameN << " frames" << std::endl;
-
-	countingTexture.~Texture();
 
 	frames.resize(frameN);
 	frameTimes.resize(frameN);
@@ -52,6 +51,8 @@ Animation::Animation(std::string _name, std::string _path, WindowM* _window)
 
 		createData(frameTimes, frameN, &dataPath);
 	}
+
+	std::cout << std::endl;
 }
 
 SDL_Texture* Animation::play()

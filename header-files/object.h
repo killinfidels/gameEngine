@@ -10,6 +10,7 @@ public:
 	~Object();
 
 	void draw();
+	void draw(SDL_Rect cam);
 
 	bool dontSlowDown = true;
 	

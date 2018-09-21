@@ -108,6 +108,7 @@ void GameMap::createMap()
 			{
 				tileMap[hhh][www].setTexture(tilesTexture.getTexture());
 				tileMap[hhh][www].textureRect = tileRects[tileMapId[hhh][www]];
+				tileMap[hhh][www].sprite = true;
 			}
 			else
 			{
@@ -136,6 +137,13 @@ void GameMap::drawMap()
 			tileMap[hhh][www].draw();
 }
 
+void GameMap::drawMap(SDL_Rect cam)
+{
+	for (int hhh = 0; hhh < h; hhh++)
+		for (int www = 0; www < w; www++)
+			tileMap[hhh][www].draw(cam);
+}
+
 void GameMap::setTileMap(std::vector<std::vector<int>> _tileMap)
 {
 	for (int hhh = 0; hhh < h; hhh++)
@@ -159,6 +167,7 @@ void GameMap::setTilesTexture(std::string tilePath)
 	std::ifstream tilefile;
 	std::string line;
 
+	tilesTexture.setRenderer(renderer);
 	tilesTexture.createTexture(tilePath + ".png");
 
 	tilefile.open(tilePath + ".tsx", std::ios::in);
@@ -171,42 +180,167 @@ void GameMap::setTilesTexture(std::string tilePath)
 	{
 		while (std::getline(tilefile, line))
 		{
-			std::cout << line << '\n';
-			
 			int pos;
 			std::string number;
 
 			pos = line.find("tilewidth");
-			pos = line.find("\"", pos) + 1;
+			if (pos != std::string::npos)
+			{
+				pos = line.find("\"", pos) + 1;
 
-			number = line.substr(pos, line.find("\"", pos) - pos);
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileTextureWidth = std::stoi(number);
+			}
+
+			pos = line.find("tileheight");
+			if (pos != std::string::npos)
+			{
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileTextureHeight = std::stoi(number);
+			}
+
+			pos = line.find("tilecount");
+			if (pos != std::string::npos)
+			{
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileCount = std::stoi(number);
+			}
+
+			pos = line.find("columns");
+			if (pos != std::string::npos)
+			{
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileSheetColumns = std::stoi(number);
+			}
+
+			pos = line.find("image source");
+			if (pos != std::string::npos)
+			{
+				pos = line.find("width");
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileSheetWidth = std::stoi(number);
+
+				pos = line.find("height");
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				tileSheetHeight = std::stoi(number);
+			}
+		}
+
+		tilefile.close();
+
+		int tilesPerColumn = tileSheetWidth / tileTextureWidth;
+
+		int tilesSet = 0;
+
+		tileRects.resize(tileCount);
+
+		for (int cols = 0; cols < tileSheetColumns; cols++)
+		{
+			for (int tiles = 0; tiles < tilesPerColumn; tiles++)
+			{
+				tileRects[tilesSet].x = tileTextureWidth * tiles;
+				tileRects[tilesSet].y = tileTextureHeight * cols;
+				tileRects[tilesSet].w = tileTextureWidth;
+				tileRects[tilesSet].h = tileTextureHeight;
+
+				tilesSet++;
+
+				if (tilesSet == tileCount)
+				{
+					tiles = tilesPerColumn;
+					cols = tileSheetColumns;
+				}
+			}
+		}
+	}
+}
+
+CollisionObjects::CollisionObjects(std::string name, std::string path)
+{
+	std::ifstream tilefile;
+	std::string line;
+	bool layerFound = false;
+
+	tilefile.open(path, std::ios::in);
+
+	if (!tilefile.is_open())
+	{
+		printf("could not open tile file:", path);
+	}
+	else
+	{
+		while (std::getline(tilefile, line))
+		{
+			int pos;
+			std::string number;
+
+			pos = line.find(name);
+			if (pos != std::string::npos)
+			{
+				layerFound = true;
+			}
+
+			pos = line.find("x");
+			if (pos != std::string::npos && layerFound)
+			{
+				objAmount++;
+				collisObject.resize(objAmount);
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				collisObject[objAmount - 1].rect.x = std::stoi(number);
+
+
+				pos = line.find("y");
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				collisObject[objAmount - 1].rect.y = std::stoi(number);
+
+
+				pos = line.find("width");
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				collisObject[objAmount - 1].rect.w = std::stoi(number);
+
+
+				pos = line.find("height");
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				collisObject[objAmount - 1].rect.h = std::stoi(number);
+			}
 		}
 
 		tilefile.close();
 	}
+}
 
-	int tilesPerColumn = tileSheetWidth / tileTextureWidth;
-
-	int tilesSet = 0;
-
-	tileRects.resize(tileCount);
-
-	for (int cols = 0; cols < tileSheetColumns; cols++)
-	{
-		for (int tiles = 0; tiles < tilesPerColumn; tiles++)
-		{
-			tileRects[tilesSet].x = tileTextureWidth * tiles;
-			tileRects[tilesSet].y = tileTextureHeight * cols;
-			tileRects[tilesSet].w = tileTextureWidth;
-			tileRects[tilesSet].h = tileTextureHeight;
-
-			tilesSet++;
-
-			if (tilesSet == tileCount)
-			{
-				tiles = tilesPerColumn;
-				cols = tileSheetColumns;
-			}
-		}
-	}
+CollisionObjects::~CollisionObjects()
+{
 }

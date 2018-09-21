@@ -21,7 +21,7 @@ bool Texture::createTexture(std::string path)
 	if (texture == NULL)
 	{
 		printf("IMG_Load: %s\n", IMG_GetError());
-		printf("failed to load image:\n", path);
+		printf("failed to load image: %s\n", path.c_str());
 
 		return false;
 	}

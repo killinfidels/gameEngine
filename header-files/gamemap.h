@@ -19,10 +19,13 @@ public:
     void createMap();
 
     void drawMap();
+	void drawMap(SDL_Rect cam);
 
     void setCamXY(int _camX, int _camY);
 
 	void setMapFromFile(std::string mapPath);
+
+	int camX = 0, camY = 0;
 
 private:
     std::string path;
@@ -43,5 +46,16 @@ private:
 
     int tileN = 0;
     int w, h, tW, tH;
-    int camX = 0, camY = 0;
+};
+
+class CollisionObjects
+{
+public:
+	CollisionObjects(std::string name, std::string path);
+	~CollisionObjects();
+
+	std::vector<Object> collisObject;
+	int objAmount = 0;
+private:
+
 };
