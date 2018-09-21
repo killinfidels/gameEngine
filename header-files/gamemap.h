@@ -23,7 +23,7 @@ public:
 
     void setCamXY(int _camX, int _camY);
 
-	void setMapFromFile(std::string mapPath);
+	void setMapFromFile(std::string name, std::string mapPath);
 
 	int camX = 0, camY = 0;
 
@@ -51,7 +51,7 @@ private:
 class CollisionObjects
 {
 public:
-	CollisionObjects(std::string name, std::string path);
+	CollisionObjects(std::string name, std::string path, float mult);
 	~CollisionObjects();
 
 	std::vector<Object> collisObject;

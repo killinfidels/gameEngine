@@ -8,24 +8,23 @@ GameMap::GameMap(int mapW, int mapH, int tileW, int tileH)
 	tW = tileW;
 	tH = tileH;
 
-    tileMap.resize(h);
-    tileMapId.resize(h);
+ //   tileMap.resize(h);
+ //   tileMapId.resize(h);
 
-    for(int i = 0; i < h; i++)
-    {
-        tileMap[i].resize(w);
-        tileMapId[i].resize(w);
-    }
+ //   for(int i = 0; i < h; i++)
+ //   {
+ //       tileMap[i].resize(w);
+ //       tileMapId[i].resize(w);
+ //   }
 
-	for (int hhh = 0; hhh < h; hhh++)
-		for (int www = 0; www < w; www++)
-		{
-			tileMapId[hhh][www] = 0;
+	//for (int hhh = 0; hhh < h; hhh++)
+	//	for (int www = 0; www < w; www++)
+	//	{
+	//		tileMapId[hhh][www] = 0;
 
-			tileMap[hhh][www].rect.w = tW;
-			tileMap[hhh][www].rect.h = tH;
-		}
-			
+	//		tileMap[hhh][www].rect.w = tW;
+	//		tileMap[hhh][www].rect.h = tH;
+	//	}	
 }
 
 GameMap::~GameMap() {}
@@ -33,28 +32,6 @@ GameMap::~GameMap() {}
 void GameMap::setRenderer(SDL_Renderer* _renderer)
 { renderer = _renderer; }
 
-void GameMap::setCamXY(int _camX, int _camY)
-{ 
-	camX = _camX;
-	camY = _camY;
-	
-	int yObjectPos = camY;
-
-	for (int hhh = 0; hhh < h; hhh++)
-	{
-		int xObjectPos = camX;
-
-		for (int www = 0; www < w; www++)
-		{
-			tileMap[hhh][www].rect.x = xObjectPos;
-			xObjectPos = xObjectPos + tW;
-
-			tileMap[hhh][www].rect.y = yObjectPos;
-		}
-
-		yObjectPos = yObjectPos + tH;
-	}
-}
 
 void GameMap::setTileTextures(std::string tilePath)
 {
@@ -99,7 +76,7 @@ void GameMap::createMap()
         for (int www = 0; www < w; www++)
         {
 			tileMap[hhh][www].rect.x = xObjectPos;
-			xObjectPos = xObjectPos + tW;
+			xObjectPos = xObjectPos + tileMap[0][0].rect.w;
 
 			tileMap[hhh][www].rect.y = yObjectPos;
 
@@ -124,7 +101,7 @@ void GameMap::createMap()
 			}
         }
 
-		yObjectPos = yObjectPos + tH;
+		yObjectPos = yObjectPos + tileMap[0][0].rect.w;
     }
 
     printf("map created, ready for rendering\n");
@@ -151,9 +128,94 @@ void GameMap::setTileMap(std::vector<std::vector<int>> _tileMap)
 			tileMapId[hhh][www] = _tileMap[hhh][www];
 }
 
-void GameMap::setMapFromFile(std::string mapPath)
+void GameMap::setMapFromFile(std::string name, std::string mapPath)
 {
+	std::ifstream tilefile;
+	std::string line;
+	bool layerFound = false;
 
+	tilefile.open(mapPath, std::ios::in);
+
+	if (!tilefile.is_open())
+	{
+		printf("could not open map file: \%n", mapPath.c_str());
+	}
+	else
+	{
+		while (std::getline(tilefile, line))
+		{
+			int pos;
+			std::string number;
+
+			pos = line.find(name);
+			if (pos != std::string::npos)
+			{
+				layerFound = true;
+
+				pos = line.find("width");
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				w = std::stoi(number);
+
+
+				pos = line.find("height");
+
+				pos = line.find("\"", pos) + 1;
+
+				number = line.substr(pos, line.find("\"", pos) - pos);
+
+				h = std::stoi(number);
+
+				tileMap.resize(h);
+				tileMapId.resize(h);
+
+				for (int i = 0; i < h; i++)
+				{
+					tileMap[i].resize(w);
+					tileMapId[i].resize(w);
+				}
+			}
+
+			pos = std::string::npos;
+
+			if (layerFound)
+			{
+				while (pos == std::string::npos)
+				{
+					std::getline(tilefile, line);
+					pos = line.find_first_of("0123456789");
+				}
+				
+
+				for (int yyy = 0; yyy < h; yyy++)
+				{
+					pos = 0;
+					for (int xxx = 0; xxx < w; xxx++)
+					{
+						pos = line.find_first_of("0123456789", pos);
+
+						number = line.substr(pos, 1);
+						pos = pos++;
+
+						tileMapId[yyy][xxx] = std::stoi(number) - 1;
+
+						tileMap[yyy][xxx].rect.w = tW;
+						tileMap[yyy][xxx].rect.h = tH;
+					}
+
+					std::getline(tilefile, line);
+				}
+
+				while (std::getline(tilefile, line))
+				{ }
+			}
+		}
+
+		tilefile.close();
+	}
 }
 
 void GameMap::setTilesTexture(std::string tilePath)
@@ -271,7 +333,7 @@ void GameMap::setTilesTexture(std::string tilePath)
 	}
 }
 
-CollisionObjects::CollisionObjects(std::string name, std::string path)
+CollisionObjects::CollisionObjects(std::string name, std::string path, float mult)
 {
 	std::ifstream tilefile;
 	std::string line;
@@ -292,6 +354,27 @@ CollisionObjects::CollisionObjects(std::string name, std::string path)
 
 			pos = line.find(name);
 			if (pos != std::string::npos)
+				layerFound = true;
+
+			pos = line.find("x");
+			if (pos != std::string::npos && layerFound)
+				objAmount++;
+		}
+
+		collisObject.resize(objAmount);
+
+		layerFound = false;
+
+		tilefile.close();
+		tilefile.open(path, std::ios::in);
+		int countt = 0;
+		while (std::getline(tilefile, line))
+		{
+			int pos;
+			std::string number;
+
+			pos = line.find(name);
+			if (pos != std::string::npos)
 			{
 				layerFound = true;
 			}
@@ -299,14 +382,11 @@ CollisionObjects::CollisionObjects(std::string name, std::string path)
 			pos = line.find("x");
 			if (pos != std::string::npos && layerFound)
 			{
-				objAmount++;
-				collisObject.resize(objAmount);
-
 				pos = line.find("\"", pos) + 1;
 
 				number = line.substr(pos, line.find("\"", pos) - pos);
 
-				collisObject[objAmount - 1].rect.x = std::stoi(number);
+				collisObject[countt].rect.x = std::stoi(number) * mult;
 
 
 				pos = line.find("y");
@@ -315,7 +395,7 @@ CollisionObjects::CollisionObjects(std::string name, std::string path)
 
 				number = line.substr(pos, line.find("\"", pos) - pos);
 
-				collisObject[objAmount - 1].rect.y = std::stoi(number);
+				collisObject[countt].rect.y = std::stoi(number) * mult;
 
 
 				pos = line.find("width");
@@ -324,7 +404,7 @@ CollisionObjects::CollisionObjects(std::string name, std::string path)
 
 				number = line.substr(pos, line.find("\"", pos) - pos);
 
-				collisObject[objAmount - 1].rect.w = std::stoi(number);
+				collisObject[countt].rect.w = std::stoi(number) * mult;
 
 
 				pos = line.find("height");
@@ -333,7 +413,9 @@ CollisionObjects::CollisionObjects(std::string name, std::string path)
 
 				number = line.substr(pos, line.find("\"", pos) - pos);
 
-				collisObject[objAmount - 1].rect.h = std::stoi(number);
+				collisObject[countt].rect.h = std::stoi(number) * mult;
+
+				countt++;
 			}
 		}
 

@@ -168,6 +168,6 @@ void Object::updateMovement()
 
 Object::~Object()
 {
-	SDL_DestroyTexture(_texture);
-	_texture = NULL;
+	/*SDL_DestroyTexture(_texture);
+	_texture = NULL;*/
 }
