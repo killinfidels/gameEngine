@@ -56,8 +56,9 @@ Texture::~Texture()
 {
 	//TTF_CloseFont(_font);
 
-	SDL_FreeSurface(surface);
+	/*SDL_FreeSurface(surface);
 	surface = NULL;
+	
 	SDL_DestroyTexture(texture);
-	texture = NULL;
+	texture = NULL;*/
 }

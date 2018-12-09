@@ -10,7 +10,7 @@ public:
 	~Object();
 
 	void draw();
-	void draw(SDL_Rect cam);
+	void draw(SDL_Rect cam, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	bool dontSlowDown = true;
 	
@@ -25,6 +25,9 @@ public:
 	bool sprite = false;
 
 	SDL_Rect textureRect;
+
+	void stopX(int x);
+	void stopY(int y);
 
 protected:
 	SDL_Window* window = NULL;
@@ -41,9 +44,6 @@ protected:
 	double velocity_y = 0;
 
 	double accelleration;
-
-	void stopX(int x);
-	void stopY(int y);
 
 public:
 	bool setTexture(SDL_Texture* oTexture);

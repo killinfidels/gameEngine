@@ -100,6 +100,6 @@ Animation::~Animation()
 {
 	saveData(frameTimes, frameN, &dataPath);
 
-	for (int i = 0; i < frameN; i++)
-		frames[i].~Texture();
+	/*for (int i = 0; i < frameN; i++)
+		frames[i].~Texture();*/
 }

@@ -40,5 +40,8 @@ public:
 	bool isReleased(int keyCode);
 
 private:
+	int indexHandler(int keyCode);
+	std::vector<int> keyIndex;
+	int keys = 0;
 	FlagArrays keyState;
 };

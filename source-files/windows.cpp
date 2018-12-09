@@ -11,7 +11,7 @@ WindowM::WindowM(const char* windowName, int w, int h)
 	if (window == NULL)
 	{
 		printf(name);
-		printf("window could not be created/n");
+		printf(":\nwindow could not be created:\nError:");
 		printf(SDL_GetError());
 
 		success = false;
@@ -23,7 +23,7 @@ WindowM::WindowM(const char* windowName, int w, int h)
 		if (renderer == NULL)
 		{
 			printf(name);
-			printf("renderer could not be created/n");
+			printf(":\nrenderer could not be created:\nError: ");
 			printf(SDL_GetError());
 
 			SDL_DestroyWindow(window);
@@ -32,6 +32,13 @@ WindowM::WindowM(const char* windowName, int w, int h)
 		}
 		else
 		{
+			if (SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND) != 0)
+			{
+				printf(name);
+				printf(":\ncould not alpha blend:\nError: ");
+				printf(SDL_GetError());
+			}
+
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		}
 	}

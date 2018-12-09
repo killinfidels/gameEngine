@@ -34,7 +34,7 @@ void Object::draw()
 	draw(zerro);
 }
 
-void Object::draw(SDL_Rect cam)
+void Object::draw(SDL_Rect cam, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Rect renderRect;
 
@@ -50,11 +50,11 @@ void Object::draw(SDL_Rect cam)
 
 		if (sprite)
 		{
-			SDL_RenderCopy(renderer, _texture, &textureRect, &renderRect);
+			SDL_RenderCopyEx(renderer, _texture, &textureRect, &renderRect, angle, center, flip);
 		}
 		else
 		{
-			SDL_RenderCopy(renderer, _texture, NULL, &renderRect);
+			SDL_RenderCopyEx(renderer, _texture, NULL, &renderRect, angle, center, flip);
 		}
 	}
 	else
@@ -67,11 +67,11 @@ void Object::draw(SDL_Rect cam)
 
 			if (sprite)
 			{
-				SDL_RenderCopy(renderer, _texture, &textureRect, &renderRect);
+				SDL_RenderCopyEx(renderer, _texture, &textureRect, &renderRect, angle, center, flip);
 			}
 			else
 			{
-				SDL_RenderCopy(renderer, _texture, NULL, &renderRect);
+				SDL_RenderCopyEx(renderer, _texture, NULL, &renderRect, angle, center, flip);
 			}
 		}
 	}
